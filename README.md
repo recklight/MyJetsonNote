@@ -12,16 +12,16 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [修改默認python版本](#修改默認python版本)
 * [安裝Tensorflow](#安裝Tensorflow) 
 * [安裝多版本Tensorflow](#安裝多版本Tensorflow) 
+* [Opencv3](#Opencv3) 
 * [PyAudio](#PyAudio) 
 * [Sounddevice](#Sounddevice) 
 * [librosa0.6.3](#librosa0.6.3)
-* [Opencv3](#Opencv3) 
 * [exFAT_driver](#exFAT_driver) 
 * [JAVA](#JAVA) 
 * [kolourpaint4](#kolourpaint4) 
 * [PyQt5](#PyQt5) 
 * [PyTorch](#PyTorch) 
- 
+* [CloneSDcard](#CloneSDcard) 
 
 安裝
 ------
@@ -29,10 +29,12 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * 下載image, 燒至SD 卡
 
-### TX2
+### TX2, AGX
 **Host電腦端 :** 須先準備一台linux系統的電腦/或是在虛擬機上安裝linux系統（所需硬碟空間>100GB）
 
 1. 在Host電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
+
+1-1. 此步可省略 (將TX2連接上螢幕, 進入Recovery(工程模式), 使用傳輸線連接TX2與電腦端
 
 2. 開啟SDK Manager, 登入NVIDIA 帳戶
 ![1](https://user-images.githubusercontent.com/53622566/82420244-0d868f80-9ab2-11ea-9524-b45e54fe9656.png)
@@ -46,25 +48,15 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 6. 跳出一個視窗要求輸入系統密碼, 輸入後以繼續安裝
 ![4](https://user-images.githubusercontent.com/53622566/82420458-52122b00-9ab2-11ea-9a25-64874768a69f.png)
 
-7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作TX2進入Recovery模式後, 點擊**Flash**
+7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作TX2進入Recovery(工程模式)後, 點擊**Flash**(將TX2連接上螢幕)
 ![6](https://user-images.githubusercontent.com/53622566/82420572-7a018e80-9ab2-11ea-9a16-fafd75bd70cd.png)
 
-8. 等待出現視窗如下後, 移至**TX2端**進行下一步
+8. 等待出現視窗如下後, 移至**TX2端**, 設定系統名稱, 密碼等, 最後畫面停留至桌面
 ![7](https://user-images.githubusercontent.com/53622566/82420653-9b627a80-9ab2-11ea-819e-2e414d6ff317.png)
 
-9. TX2設定系統名稱, 密碼等, 至桌面後連上網路開啟終端機執行
-```
-sudo apt update
-sudo apt upgrade
-sudo apt autoremove
-sudo reboot
-```
+9. 回到**Host電腦端**輸入剛才在TX2的設定的使用者名稱與密碼, 點擊**Install**
 
-10. 請確認TX2與Host電腦端在同一個網域下, TX2 IP位置是否為192.168.50.1
-
-11. 回到Host電腦端輸入TX2的使用者名稱與密碼, 點擊**Install**
-
-12. 等待安裝結束, 點擊**Finish and exit**, 安裝完成
+10. 安裝結束, 點擊**Finish and exit**, 安裝完成
 ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
 
@@ -73,13 +65,13 @@ sudo reboot
 1. CUDA
 在Tegra上nvidia-smi是沒有作用的, 直接使用指令查看CUDA版本
 ```Bash
-sudo find / -name 
+sudo find / -name  cuda
 ```
 或
 ```Bash
-nvcc -V
 ## set an environment variable for cuda
 export PATH=$PATH:/usr/local/cuda/bin
+nvcc -V
 ```
 可以看到已經安裝CUDA 10.0 的版本
 TX2, Jetpack 4.3, CUDA 10.0
@@ -147,12 +139,13 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 # sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow-gpu==2.0.0+nv20.1
 ```
 
-**Xavier NX**
-* 2020.07.10 Update
+**Xavier NX, AGX**
+```Bash
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
+```
+or
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==1.15.2+nv20.6
-#sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
-# sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==2.2.0+nv20.6
 ```
 
 3. Verifying The Installation
@@ -161,7 +154,6 @@ To verify that TensorFlow has been successfully installed,  you'll need to launc
 python3
 import tensorflow
 ```
-
 
 安裝多版本Tensorflow
 ------
@@ -205,107 +197,8 @@ sudo pip3 install --upgrade --extra-index-url https://developer.download.nvidia.
 ```
 
 
-PyAudio
-------
-##### Method 1
-```Bash
-sudo apt install python-all-dev portaudio19-dev
-sudo pip3 install pyaudio
-```
 
-##### Method2
-```Bash
-# Download pa_stable_v190600_20161030.tgz from http://www.portaudio.com/download.html
-# Unzip
-
-sudo apt install libasound-dev
-./configure && make
-sudo make install
-sudo apt install python-pyaudio python3-pyaudio
-```
-
-Sounddevice
-------
-```Bash
-sudo apt install libffi-dev
-sudo pip install sounddevice
-```
-
-librosa0.6.3
-------
-> [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
-
-> [numba/llvmlite](https://github.com/numba/llvmlite)
-
-> [llvmlite documents](https://llvmlite.readthedocs.io/en/latest/)
-
-#### llvmlite Compatibility 
-llvmlite versions  |compatible LLVM versions
---------- | --------|
-0.34.0 - ...       |10.0.x (9.0.x for  ``aarch64`` only)
-0.33.0             |9.0.x
-0.29.0 - 0.32.0    |7.0.x, 7.1.x, 8.0.x
-0.27.0 - 0.28.0    |7.0.x
-0.23.0 - 0.26.0    |6.0.x
-0.21.0 - 0.22.0    |5.0.x
-0.17.0 - 0.20.0    |4.0.x
-0.16.0 - 0.17.0    |3.9.x
-0.13.0 - 0.15.0    |3.8.x
-0.9.0 - 0.12.1     |3.7.x
-0.6.0 - 0.8.0      |3.6.x
-0.1.0 - 0.5.1      |3.5.x
-
-#### Upgrade the SETUP tools:
-```Bash
-sudo pip3 install -U setuptools
-sudo pip3 install cython
-sudo pip3 install --upgrade pip
-```
-
-#### Install LLVM & LLVMLITE:
-```Bash
-wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
-tar -xvf llvm-7.0.1.src.tar.xz
-cd llvm-7.0.1.src
-mkdir llvm_build_dir
-cd llvm_build_dir/
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
-make -j4
-sudo make install
-cd bin/
-echo "export LLVM_CONFIG=\""`pwd`"/llvm-config\"" >> ~/.bashrc
-echo "alias llvm='"`pwd`"/llvm-lit'" >> ~/.bashrc
-source ~/.bashrc
-```
-##### Finally
-```Bash
-sudo pip3 install llvmlite==0.32.1
-```
-
-#### Install Numba
-```Bash
-sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
-sudo pip3 install numba==0.38.0
-```
-#### Install Scipy
-```Bash
-sudo pip3 install scipy==1.1.0
-```
-#### Install Joblib
-```Bash
-sudo pip3 install joblib==0.12
-```
-#### Install Scikit-learn
-```Bash
-sudo pip3 install scikit-learn==0.21.1
-```
-#### Install Librosa
-```Bash
-sudo pip3 install librosa==0.6.3
-```
-
-
-Install Opencv3
+Opencv3
 ------
 > [Reference](https://jkjung-avt.github.io/opencv3-on-tx2/)
 
@@ -410,6 +303,108 @@ python2 -c 'import cv2; print(cv2.__version__)'
 * After
 
 ![nx2](https://user-images.githubusercontent.com/53622566/84370906-7e314f80-ac0b-11ea-9a39-c1ded95e81d8.png)
+
+
+
+PyAudio
+------
+##### Method 1
+```Bash
+sudo apt install python-all-dev portaudio19-dev
+sudo pip3 install pyaudio
+```
+
+##### Method2
+```Bash
+# Download pa_stable_v190600_20161030.tgz from http://www.portaudio.com/download.html
+# Unzip
+
+sudo apt install libasound-dev
+./configure && make
+sudo make install
+sudo apt install python-pyaudio python3-pyaudio
+```
+
+Sounddevice
+------
+```Bash
+sudo apt install libffi-dev
+sudo pip install sounddevice
+```
+
+librosa0.6.3
+------
+> [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
+
+> [numba/llvmlite](https://github.com/numba/llvmlite)
+
+> [llvmlite documents](https://llvmlite.readthedocs.io/en/latest/)
+
+#### llvmlite Compatibility 
+llvmlite versions  |compatible LLVM versions
+--------- | --------|
+0.34.0 - ...       |10.0.x (9.0.x for  ``aarch64`` only)
+0.33.0             |9.0.x
+0.29.0 - 0.32.0    |7.0.x, 7.1.x, 8.0.x
+0.27.0 - 0.28.0    |7.0.x
+0.23.0 - 0.26.0    |6.0.x
+0.21.0 - 0.22.0    |5.0.x
+0.17.0 - 0.20.0    |4.0.x
+0.16.0 - 0.17.0    |3.9.x
+0.13.0 - 0.15.0    |3.8.x
+0.9.0 - 0.12.1     |3.7.x
+0.6.0 - 0.8.0      |3.6.x
+0.1.0 - 0.5.1      |3.5.x
+
+#### Upgrade the SETUP tools:
+```Bash
+sudo pip3 install -U setuptools
+sudo pip3 install cython
+sudo pip3 install --upgrade pip
+```
+
+#### Install LLVM & LLVMLITE:
+```Bash
+wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
+tar -xvf llvm-7.0.1.src.tar.xz
+cd llvm-7.0.1.src
+mkdir llvm_build_dir
+cd llvm_build_dir/
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
+make -j4
+sudo make install
+cd bin/
+echo "export LLVM_CONFIG=\""`pwd`"/llvm-config\"" >> ~/.bashrc
+echo "alias llvm='"`pwd`"/llvm-lit'" >> ~/.bashrc
+source ~/.bashrc
+```
+##### Finally
+```Bash
+sudo pip3 install llvmlite==0.32.1
+```
+
+#### Install Numba
+```Bash
+sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
+sudo pip3 install numba==0.38.0
+```
+#### Install Scipy
+```Bash
+sudo pip3 install scipy==1.1.0
+```
+#### Install Joblib
+```Bash
+sudo pip3 install joblib==0.12
+```
+#### Install Scikit-learn
+```Bash
+sudo pip3 install scikit-learn==0.21.1
+```
+#### Install Librosa
+```Bash
+sudo pip3 install librosa==0.6.3
+```
+
 
 
 
@@ -520,3 +515,16 @@ print('Tensor c = ' + str(c))
 import torchvision
 print(torchvision.version)
 ```
+
+CloneSDcard
+------
+#### PyTorch 1.6.0
+##### find your SD card
+```Bash
+sudo fdisk -l
+```
+##### clone SD card
+```Bash
+sudo dd bs=4M if=/dev/mmcblk0 of=<name>.img status=progress
+```
+
