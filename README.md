@@ -107,6 +107,12 @@ sudo update-alternatives --config python
 ```
 根據提示選用預設版本, 再次運行python確定設定成功
 
+### Install new versions of software
+```Bash
+sudo apt update
+sudo apt upgrade -y
+sudo apt install python3-pip
+```
 
 ### Dynamic interface where is showed the status of your NVIDIA Jetson (command:  jtop)
 ```Bash
@@ -120,10 +126,8 @@ sudo pip3 install jetson-stats
 
 1. Install system packages required by TensorFlow:
 ```Bash
-sudo apt update
 sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
-sudo apt install python3-pip
-sudo pip3 install -U pip testresources setuptools
+sudo pip3 install -U pip testresources setuptools==49.6.0
 sudo pip3 install -U numpy==1.16.1 future==0.17.1 mock==3.0.5 \
 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
 ```
@@ -151,7 +155,7 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 3. Verifying The Installation
 To verify that TensorFlow has been successfully installed,  you'll need to launch a Python prompt and import TensorFlow.
 ```Bash
-python3
+python
 import tensorflow
 ```
 
@@ -269,7 +273,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
         -D ENABLE_NEON=ON -D WITH_LIBV4L=ON -D BUILD_TESTS=OFF \
         -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF \
         -D WITH_QT=ON -D WITH_OPENGL=ON ..
-make -j4
+sudo make -j4
 sudo make install
 ```
 
@@ -382,30 +386,16 @@ source ~/.bashrc
 ```Bash
 sudo pip3 install llvmlite==0.32.1
 ```
-
-#### Install Numba
+#### Install Numba, Scipy, Joblib, Scikit-learn
 ```Bash
 sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
 sudo pip3 install numba==0.38.0
-```
-#### Install Scipy
-```Bash
-sudo pip3 install scipy==1.1.0
-```
-#### Install Joblib
-```Bash
-sudo pip3 install joblib==0.12
-```
-#### Install Scikit-learn
-```Bash
-sudo pip3 install scikit-learn==0.21.1
+sudo pip3 install scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
 ```
 #### Install Librosa
 ```Bash
 sudo pip3 install librosa==0.6.3
 ```
-
-
 
 
 exFAT_driver
@@ -488,7 +478,7 @@ PyTorch
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
 sudo pip3 install Cython
-sudo pip3 install torch-1.6.0-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 ```
 #### Torchvision 0.7.0
 ```Bash
