@@ -26,20 +26,24 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 安裝
 ------
 ### NX
-* [官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
+* [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * 下載image, 燒至SD 卡
 
 ### TX2, AGX
-**Host電腦端 :** 須先準備一台linux系統的電腦/或是在虛擬機上安裝linux系統（所需硬碟空間>100GB）
+**Host電腦端 (電腦端):** 須先準備一台linux系統的電腦/或是在虛擬機（所需硬碟空間>100GB）上安裝linux系統
 
-1. 在Host電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
+1. 在電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
 
-1-1. 此步可省略 (將TX2連接上螢幕, 進入Recovery(工程模式), 使用傳輸線連接TX2與電腦端
+2. 硬體連接
+- 使用盒內usb線連接電腦端與AGX（連接AGX電源燈旁邊的插口）, 將AGX連接上電腦螢幕.
+- 進入工程模式, AGX接上電源並保持關機狀態下, 按住中間的按鍵（Force Recovery）不放開, 再按下左邊的電源（Power）不放開, 等待約兩秒後同時放開. 
+- 在電腦端上輸入lsusb查看是否連線上AGX（出現Nvidia corp.）
 
-2. 開啟SDK Manager, 登入NVIDIA 帳戶
+3. 開啟SDK Manager, 登入NVIDIA 帳戶
 ![1](https://user-images.githubusercontent.com/53622566/82420244-0d868f80-9ab2-11ea-9524-b45e54fe9656.png)
 
 4. 如下圖設定 **Jetson TX2** ,  **JetPack 4.3** , **DeepStream**,  點擊**CONTINUE**
+- AGX 建議安裝 Jetpack 4.4
 ![2](https://user-images.githubusercontent.com/53622566/82420328-2abb5e00-9ab2-11ea-8238-c298972a7197.png)
 
 5. 勾選左下**I accept ...**後點擊 **CONTINE**
@@ -51,7 +55,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作TX2進入Recovery(工程模式)後, 點擊**Flash**(將TX2連接上螢幕)
 ![6](https://user-images.githubusercontent.com/53622566/82420572-7a018e80-9ab2-11ea-9a16-fafd75bd70cd.png)
 
-8. 等待出現視窗如下後, 移至**TX2端**, 設定系統名稱, 密碼等, 最後畫面停留至桌面
+8. 等待出現視窗如下後, 移至**TX2端**, 可以看到系統登入畫面, 請設定系統名稱, 密碼等, 最後畫面停留至桌面
 ![7](https://user-images.githubusercontent.com/53622566/82420653-9b627a80-9ab2-11ea-819e-2e414d6ff317.png)
 
 9. 回到**Host電腦端**輸入剛才在TX2的設定的使用者名稱與密碼, 點擊**Install**
@@ -60,7 +64,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
 
-檢查安裝
+檢查安裝（可省）
 ------
 1. CUDA
 在Tegra上nvidia-smi是沒有作用的, 直接使用指令查看CUDA版本
@@ -122,6 +126,7 @@ sudo pip3 install jetson-stats
 
 安裝Tensorflow
 ------
+* [NVIDIA DOC.](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html)
 * Note: As of the 20.02 TensorFlow release, the package name has changed from tensorflow-gpu to tensorflow.
 
 1. Install system packages required by TensorFlow:
@@ -133,8 +138,8 @@ h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 fut
 ```
 
 2. Install TensorFlow using the pip3 command. 
-
-Check the [TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/)
+* 注意安裝的 Jetpack 版本
+* Check the [TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/)
 
 **TX2**
 * tensorflow-gpu 可以安裝 v1.15.0 或 v2.0.0
@@ -256,8 +261,7 @@ sudo vim /usr/local/cuda/include/cuda_gl_interop.h
 
 #### Next, download opencv-3.4.0 source code, cmake and compile. Note that opencv_contrib modules (cnn/dnn stuffs) would cause problem on pycaffe, so after some experiments I decided not to include those modules at all.
 ```Bash
-mkdir -p ~/src
-cd ~/src
+mkdir -p ~/src && cd ~/src
 wget https://github.com/opencv/opencv/archive/3.4.0.zip -O opencv-3.4.0.zip
 unzip opencv-3.4.0.zip
 ```
@@ -265,8 +269,7 @@ unzip opencv-3.4.0.zip
 #### Build opencv (CUDA_ARCH_BIN="6.2" for TX2, or "5.3" for TX1)
 ```Bash
 cd ~/src/opencv-3.4.0
-mkdir build
-cd build
+mkdir build && cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
         -D WITH_CUDA=ON -D CUDA_ARCH_BIN="6.2" -D CUDA_ARCH_PTX="" \
         -D WITH_CUBLAS=ON -D ENABLE_FAST_MATH=ON -D CUDA_FAST_MATH=ON \
@@ -364,7 +367,6 @@ llvmlite versions  |compatible LLVM versions
 ```Bash
 sudo pip3 install -U setuptools
 sudo pip3 install cython
-sudo pip3 install --upgrade pip
 ```
 
 #### Install LLVM & LLVMLITE:
@@ -372,11 +374,12 @@ sudo pip3 install --upgrade pip
 wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
 tar -xvf llvm-7.0.1.src.tar.xz
 cd llvm-7.0.1.src
-mkdir llvm_build_dir
-cd llvm_build_dir/
+mkdir llvm_build_dir && cd llvm_build_dir/
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
-make -j4
+sudo make -j4
 sudo make install
+```
+```
 cd bin/
 echo "export LLVM_CONFIG=\""`pwd`"/llvm-config\"" >> ~/.bashrc
 echo "alias llvm='"`pwd`"/llvm-lit'" >> ~/.bashrc
