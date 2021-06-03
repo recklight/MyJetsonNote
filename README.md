@@ -323,13 +323,13 @@ python2 -c 'import cv2; print(cv2.__version__)'
 
 PyAudio
 ------
-##### Method 1
+#### Method 1
 ```Bash
 sudo apt install python-all-dev portaudio19-dev
 sudo pip3 install pyaudio
 ```
 
-##### Method2
+#### Method2
 ```Bash
 # Download pa_stable_v190600_20161030.tgz from http://www.portaudio.com/download.html
 # Unzip
@@ -381,11 +381,9 @@ sudo pip3 install cython
 ```Bash
 wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
 tar -xvf llvm-7.0.1.src.tar.xz
-cd llvm-7.0.1.src
-mkdir llvm_build_dir && cd llvm_build_dir/
+cd llvm-7.0.1.src && mkdir llvm_build_dir && cd llvm_build_dir/
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
-sudo make -j4
-sudo make install
+sudo make -j4 && sudo make install
 ```
 ```
 cd bin/
@@ -399,9 +397,8 @@ sudo pip3 install llvmlite==0.32.1
 ```
 #### Install Numba, Scipy, Joblib, Scikit-learn
 ```Bash
-sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
-sudo pip3 install numba==0.38.0
-sudo pip3 install scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
+sudo apt install libblas-dev liblapack-dev libatlas-base-dev gfortran
+sudo pip3 install numba==0.38.0 scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
 ```
 #### Install Librosa
 ```Bash
@@ -439,24 +436,22 @@ PyQt5
 ------
 #### Method 1
 ```Bash
-sudo apt-get install qt5-default
-sudo apt install python3-pyqt5
-sudo apt install pyqt5-dev-tools qttools5-dev-tools
+sudo apt install qt5-default python3-pyqt5 pyqt5-dev-tools qttools5-dev-tools
 sudo pip3 install pyqt5
 ```
-* If build wheel error, try
+- If build wheel error, try
 ```Bash
 # sudo pip3 install sip==5.0.1
 ```
 
 #### Method 2
 
-##### If you have an old version of SIP
+- If you have an old version of SIP
 ```Bash
 sudo apt remove python3-sip
 sudo apt autoremove
 ```
-##### Install sip
+- Install sip
 > [What is SIP?](https://pypi.org/project/SIP/)
 
 > [Download Sip source](https://riverbankcomputing.com/software/sip/download)
@@ -466,7 +461,7 @@ make
 sudo make install
 ```
 
-##### Install pyqt5
+- Install pyqt5
 > [PyQt Reference Guide](https://www.riverbankcomputing.com/static/Docs/PyQt5/installation.html)
 
 > [Download PyQt5 source](https://riverbankcomputing.com/software/pyqt/download5)
@@ -476,7 +471,7 @@ make
 sudo make install
 sudo pip3 install PyQt5
 ```
-##### Install  ie multimedia
+- Install  ie multimedia
 ```Bash
 sudo apt install python3-pyqt5.qtmultimedia
 ```
@@ -485,30 +480,28 @@ sudo apt install python3-pyqt5.qtmultimedia
 PyTorch
 ------
 - [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
-#### PyTorch 1.6.0
+#### PyTorch 1.6.0 + Torchvision 0.7.0
 ```Bash
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
 sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-```
-#### Torchvision 0.7.0
-```Bash
+
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
 cd torchvision && sudo python setup.py install
 ```
-#### PyTorch 1.7.0
+
+#### PyTorch 1.7.0 + Torchvision 0.8.1
 ```Bash
 wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
 sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
-```
-#### Torchvision 0.8.1
-```Bash
+
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
 ```
+
 #### Verification
 ```Bash
 import torch
