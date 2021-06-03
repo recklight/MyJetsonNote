@@ -347,7 +347,7 @@ sudo apt install libffi-dev
 sudo pip install sounddevice
 ```
 
-librosa0.6.3
+librosa 0.6.3
 ------
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
@@ -501,7 +501,7 @@ cd torchvision && sudo python setup.py install
 ```Bash
 wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 ```
 #### Torchvision 0.8.1
 ```Bash
