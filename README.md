@@ -114,7 +114,7 @@ sudo update-alternatives --config python
 ### Install new versions of software
 ```Bash
 sudo apt update
-sudo apt upgrade -y
+sudo apt upgrade
 sudo apt install python3-pip
 ```
 
@@ -149,12 +149,17 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 ```
 
 **Xavier NX, AGX**
+- JetPack 4.4.1
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
 ```
 or
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==1.15.2+nv20.6
+```
+- JetPack 4.5.1
+```Bash
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v45 'tensorflow<2'
 ```
 
 3. Verifying The Installation
@@ -273,12 +278,11 @@ cd ~/src/opencv-3.4.0
 mkdir build && cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
-        -D WITH_CUDA=ON -D CUDA_ARCH_BIN="7.2" -D CUDA_ARCH_PTX="" \
+        -D WITH_CUDA=ON -D CUDA_ARCH_BIN="5.3,6.2,7.2" -D CUDA_ARCH_PTX="" \
         -D WITH_CUBLAS=ON -D ENABLE_FAST_MATH=ON -D CUDA_FAST_MATH=ON \
         -D ENABLE_NEON=ON -D WITH_LIBV4L=ON -D BUILD_TESTS=OFF \
         -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF \
         -D WITH_QT=ON -D WITH_OPENGL=ON ..
-#cmake -D WITH_CUDA=ON -D WITH_CUDNN=ON -D CUDA_ARCH_BIN="5.3,6.2,7.2" -D CUDA_ARCH_PTX="" -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${version}/modules -D WITH_GSTREAMER=ON -D WITH_LIBV4L=ON -D BUILD_opencv_python2=ON -D BUILD_opencv_python3=ON -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
 
 sudo make -j4
 sudo make install
@@ -480,20 +484,30 @@ sudo apt install python3-pyqt5.qtmultimedia
 
 PyTorch
 ------
+- [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
 #### PyTorch 1.6.0
 ```Bash
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython
-sudo pip3 install torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 ```
 #### Torchvision 0.7.0
 ```Bash
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
-cd torchvision
-sudo python setup.py install
-cd ../
+cd torchvision && sudo python setup.py install
+```
+#### PyTorch 1.7.0
+```Bash
+wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+sudo apt install python3-pip libopenblas-base libopenmpi-dev
+sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+```
+#### Torchvision 0.8.1
+```Bash
+sudo apt install libjpeg-dev zlib1g-dev
+git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
+cd torchvision && sudo python setup.py install
 ```
 #### Verification
 ```Bash
@@ -515,7 +529,7 @@ print(torchvision.version)
 
 CloneSDcard
 ------
-#### PyTorch 1.6.0
+-[dd 指令](https://blog.gtwang.org/linux/dd-command-examples/)
 ##### find your SD card
 ```Bash
 sudo fdisk -l
