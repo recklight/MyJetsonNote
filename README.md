@@ -15,7 +15,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [Opencv3](#Opencv3) 
 * [PyAudio](#PyAudio) 
 * [Sounddevice](#Sounddevice) 
-* [librosa0.6.3](#librosa0.6.3)
+* [librosa 0.6.3](#librosa 0.6.3)
 * [exFAT_driver](#exFAT_driver) 
 * [JAVA](#JAVA) 
 * [kolourpaint4](#kolourpaint4) 
