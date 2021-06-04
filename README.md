@@ -27,6 +27,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ------
 ### NX
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
+* [JETPACK SDK](https://developer.nvidia.com/embedded/jetpack)
 * 下載image, 燒至SD 卡
 
 ### TX2, AGX
@@ -522,7 +523,7 @@ print(torchvision.version)
 
 CloneSDcard
 ------
--[dd 指令](https://blog.gtwang.org/linux/dd-command-examples/)
+- [dd command](https://blog.gtwang.org/linux/dd-command-examples/)
 ##### find your SD card
 ```Bash
 sudo fdisk -l
