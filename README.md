@@ -175,7 +175,7 @@ import tensorflow
 1. Set up the Virtual Environment
 First, install the virtualenv package and create a new Python 3 virtual environment:
 ```Bash
-sudo apt-get install virtualenv
+sudo apt install virtualenv
 python3 -m virtualenv -p python3 <chosen_venv_name>
 ```
 
@@ -244,7 +244,7 @@ sudo pip3 install matplotlib
 sudo vim /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
 ```
 
-#### Before downloading and building opencv-3.4.0, I’d first do some modifications according to this post, in order to fix OpenGL related compilation problems . More specifically, I’d modify /usr/local/cuda/include/cuda_gl_interop.h and fix the symbolic link of libGL.so.
+#### Modify /usr/local/cuda/include/cuda_gl_interop.h and fix the symbolic link of libGL.so.
 ```Bash
 sudo vim /usr/local/cuda/include/cuda_gl_interop.h
 ```
@@ -257,13 +257,6 @@ sudo vim /usr/local/cuda/include/cuda_gl_interop.h
 //#else
  #include <GL/gl.h>
 //#endif
-```
-
-#### After Jetpack 4.2 and we don't have to do
-```Bash
-# cd /usr/lib/aarch64-linux-gnu/
-## sudo ln -sf tegra/libGL.so libGL.so
-# sudo ln -sf libGL.so.1.0.0 libGL.so
 ```
 
 #### Next, download opencv-3.4.0 source code, cmake and compile. Note that opencv_contrib modules (cnn/dnn stuffs) would cause problem on pycaffe, so after some experiments I decided not to include those modules at all.
@@ -279,14 +272,13 @@ cd ~/src/opencv-3.4.0
 mkdir build && cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
-        -D WITH_CUDA=ON -D CUDA_ARCH_BIN="5.3,6.2,7.2" -D CUDA_ARCH_PTX="" \
+        -D WITH_CUDA=ON -D CUDA_ARCH_BIN="7.2" -D CUDA_ARCH_PTX="" \
         -D WITH_CUBLAS=ON -D ENABLE_FAST_MATH=ON -D CUDA_FAST_MATH=ON \
         -D ENABLE_NEON=ON -D WITH_LIBV4L=ON -D BUILD_TESTS=OFF \
         -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF \
         -D WITH_QT=ON -D WITH_OPENGL=ON ..
 
-sudo make -j4
-sudo make install
+sudo make -j4 && sudo make install
 ```
 
 #### To verify the installation:
@@ -345,7 +337,7 @@ Sounddevice
 ------
 ```Bash
 sudo apt install libffi-dev
-sudo pip install sounddevice
+sudo pip3 install sounddevice
 ```
 
 librosa0.6.3
@@ -419,11 +411,11 @@ JAVA
 ------
 ##### JRE
 ```Bash
-sudo apt-get install default-jre
+sudo apt install default-jre
 ```
 ##### JDK
 ```Bash
-sudo apt-get install default-jdk
+sudo apt install default-jdk
 ```
 
 
