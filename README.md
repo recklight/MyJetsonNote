@@ -15,7 +15,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [Opencv3](#Opencv3) 
 * [PyAudio](#PyAudio) 
 * [Sounddevice](#Sounddevice) 
-* [librosa 0.6.3](#librosa 0.6.3)
+* [librosa-0.6.3](#librosa-0.6.3)
 * [exFAT_driver](#exFAT_driver) 
 * [JAVA](#JAVA) 
 * [kolourpaint4](#kolourpaint4) 
@@ -348,7 +348,7 @@ sudo apt install libffi-dev
 sudo pip install sounddevice
 ```
 
-librosa 0.6.3
+librosa-0.6.3
 ------
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
