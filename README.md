@@ -515,13 +515,18 @@ print(torchvision.version)
 
 CloneSDcard
 ------
-- [dd command](https://blog.gtwang.org/linux/dd-command-examples/)
+- [dd command1](https://blog.gtwang.org/linux/dd-command-examples/)
+- [dd command2](https://blog.xuite.net/mb1016.flying/linux/28346040)
 ##### find your SD card
 ```Bash
 sudo fdisk -l
 ```
-##### clone SD card
+##### clone SD card to img
 ```Bash
-sudo dd bs=4M if=/dev/mmcblk0 of=<name>.img status=progress
+sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.img.gz
+```
+##### clone img to SD card
+```Bash
+sudo gunzip -c ~/image.img.gz | dd of=/dev/sdb bs=4M status=progress
 ```
 
