@@ -28,15 +28,14 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ### NX
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * [JETPACK SDK](https://developer.nvidia.com/embedded/jetpack)
-* 下載image, 燒至SD 卡
 
 ### TX2, AGX
-**Host電腦端 (電腦端):** 須先準備一台linux系統的電腦/或是在虛擬機（所需硬碟空間>100GB）上安裝linux系統
+**Host電腦端 (電腦端):** 準備一台系統為linux的電腦
 
 1. 在電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
 
 2. 硬體連接
-- 使用盒內usb線連接電腦端與AGX（連接AGX電源燈旁邊的插口）, 將AGX連接上電腦螢幕.
+- 使用盒內usb線連接電腦端與AGX（連接AGX電源燈對面的Type-c）, 將AGX連接上電腦螢幕.
 - 進入工程模式, AGX接上電源並保持關機狀態下, 按住中間的按鍵（Force Recovery）不放開, 再按下左邊的電源（Power）不放開, 等待約兩秒後同時放開. 
 - 在電腦端上輸入lsusb查看是否連線上AGX（出現Nvidia corp.）
 
@@ -44,7 +43,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ![1](https://user-images.githubusercontent.com/53622566/82420244-0d868f80-9ab2-11ea-9524-b45e54fe9656.png)
 
 4. 如下圖設定 **Jetson TX2** ,  **JetPack 4.3** , **DeepStream**,  點擊**CONTINUE**
-- AGX 建議安裝 Jetpack 4.4
+- AGX 建議安裝 Jetpack 4.4, 可不勾選DeepStream
 ![2](https://user-images.githubusercontent.com/53622566/82420328-2abb5e00-9ab2-11ea-8238-c298972a7197.png)
 
 5. 勾選左下**I accept ...**後點擊 **CONTINE**
@@ -56,7 +55,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作TX2進入Recovery(工程模式)後, 點擊**Flash**(將TX2連接上螢幕)
 ![6](https://user-images.githubusercontent.com/53622566/82420572-7a018e80-9ab2-11ea-9a16-fafd75bd70cd.png)
 
-8. 等待出現視窗如下後, 移至**TX2端**, 可以看到系統登入畫面, 請設定系統名稱, 密碼等, 最後畫面停留至桌面
+8. 等待出現視窗如下後, 移至**TX2端 (AGX)**, 可以看到系統登入畫面, 請設定系統名稱、密碼等, 最後畫面停留至桌面
 ![7](https://user-images.githubusercontent.com/53622566/82420653-9b627a80-9ab2-11ea-819e-2e414d6ff317.png)
 
 9. 回到**Host電腦端**輸入剛才在TX2的設定的使用者名稱與密碼, 點擊**Install**
@@ -530,3 +529,33 @@ sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.
 sudo gunzip -c ~/image.img.gz | dd of=/dev/sdb bs=4M status=progress
 ```
 
+Others
+------
+
+```Bash
+sudo pip install PyYAML>=5.3 keras==2.3.1 pyusb click xlsxwriter tqdm
+```
+
+- Anonymous FTP server
+```Bash
+sudo apt install vsftpd
+# systemctl status vsftpd
+# netstat -tupln | grep ftp
+```
+
+```Bash
+sudo vi /etc/vsftpd.conf
+# Allow anonymous FTP? (Disabled by default).
+anonymous_enable=YES
+# Uncomment this to enable any form of FTP write command.
+write_enable=YES
+
+# Uncomment this to allow the anonymous FTP user to upload files. This only
+# has an effect if the above global write enable is activated. Also, you will
+# obviously need to create a directory writable by the FTP user.
+anon_upload_enable=YES
+```
+
+```Bash
+sudo systemctl restart vsftpd
+```
