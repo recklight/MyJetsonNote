@@ -526,7 +526,7 @@ sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.
 ```
 ##### clone img to SD card
 ```Bash
-sudo gunzip -c ~/image.img.gz | dd of=/dev/sdb bs=4M status=progress
+sudo gunzip -c ~/image.img.gz | sudo dd of=/dev/sdb bs=4M status=progress
 ```
 
 Others
