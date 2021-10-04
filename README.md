@@ -5,22 +5,21 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 
 目錄
 ------
-* [安装](#安装)
-    * [NX](#NX)
-    * [TX2](#TX2)
+* [安装系統](#安装系統)
 * [檢查安裝](#檢查安裝)  
 * [修改默認python版本](#修改默認python版本)
 * [安裝Tensorflow](#安裝Tensorflow) 
 * [安裝多版本Tensorflow](#安裝多版本Tensorflow) 
-* [Opencv3](#Opencv3) 
+* [Opencv](#Opencv) 
 * [PyAudio](#PyAudio) 
 * [Sounddevice](#Sounddevice) 
-* [librosa0.6.3](#librosa0.6.3)
+* [Librosa0.6.3](#Librosa0.6.3)
 * [PyQt5](#PyQt5) 
 * [PyTorch](#PyTorch) 
 * [Others](#Others) 
-* 
-安裝
+
+
+安装系統
 ------
 ### NX
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
@@ -61,7 +60,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
 
-檢查安裝（可省）
+檢查安裝
 ------
 1. CUDA
 在Tegra上nvidia-smi是沒有作用的, 直接使用指令查看CUDA版本
@@ -224,12 +223,11 @@ libatlas-base-dev gfortran libopenblas-dev liblapack-dev liblapacke-dev qt5-defa
 ```
 
 ```Bash
-mkdir -p ~/src && cd ~/src
 wget https://github.com/opencv/opencv/archive/3.4.0.zip -O opencv-3.4.0.zip
 unzip opencv-3.4.0.zip && cd opencv-3.4.0
 wget https://github.com/opencv/opencv_contrib/archive/3.4.0.zip -O opencv_contrib-3.4.0.zip
 unzip opencv_contrib-3.4.0.zip
-cd ~/src/opencv-3.4.0 && mkdir build && cd build
+cd .. && mkdir build && cd build
 ```
 
 ```Bash
