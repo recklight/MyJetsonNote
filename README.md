@@ -16,13 +16,10 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [PyAudio](#PyAudio) 
 * [Sounddevice](#Sounddevice) 
 * [librosa0.6.3](#librosa0.6.3)
-* [exFAT_driver](#exFAT_driver) 
-* [JAVA](#JAVA) 
-* [kolourpaint4](#kolourpaint4) 
 * [PyQt5](#PyQt5) 
 * [PyTorch](#PyTorch) 
-* [CloneSDcard](#CloneSDcard) 
-
+* [Others](#Others) 
+* 
 安裝
 ------
 ### NX
@@ -411,8 +408,6 @@ cd torchvision && sudo python setup.py install
 ```
 
 
-
-
 Others
 ------
 - Useful
@@ -462,11 +457,11 @@ sudo apt install exfat-fuse exfat-utils
 ```
 
 - Java
-##### JRE
+###### JRE
 ```Bash
 sudo apt install default-jre
 ```
-##### JDK
+###### JDK
 ```Bash
 sudo apt install default-jdk
 ```
@@ -475,15 +470,15 @@ sudo apt install default-jdk
 > [dd command1](https://blog.gtwang.org/linux/dd-command-examples/)
 
 > [dd command2](https://blog.xuite.net/mb1016.flying/linux/28346040)
-##### find your SD card
+###### find your SD card
 ```Bash
 sudo fdisk -l
 ```
-##### clone SD card to img
+###### clone SD card to img
 ```Bash
 sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.img.gz
 ```
-##### clone img to SD card
+###### clone img to SD card
 ```Bash
 sudo gunzip -c ~/image.img.gz | sudo dd of=/dev/sdb bs=4M status=progress
 ```
