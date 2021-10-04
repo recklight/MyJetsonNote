@@ -149,7 +149,7 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 ```
 
 **Xavier NX, AGX**
-- JetPack 4.4.1
+- JetPack 4.4.x
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
 ```
@@ -157,7 +157,7 @@ or
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==1.15.2+nv20.6
 ```
-- JetPack 4.5.1
+- JetPack 4.5.x
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v45 'tensorflow<2'
 ```
@@ -211,15 +211,10 @@ sudo pip3 install --upgrade --extra-index-url https://developer.download.nvidia.
 ```
 
 
-
-Opencv3
+Opencv
 ------
-> [Reference1](https://jkjung-avt.github.io/opencv3-on-tx2/)
-> [Reference2](https://www.jetsonhacks.com/2018/11/08/build-opencv-3-4-on-nvidia-jetson-agx-xavier-developer-kit/)
-
 ```Bash
-sudo apt update
-sudo apt dist-upgrade
+sudo apt install python3-dev python3-pip python3-tk
 sudo apt install --only-upgrade g++-5 cpp-5 gcc-5
 sudo apt install build-essential make cmake cmake-curses-gui \
 g++ libavformat-dev libavutil-dev \
@@ -231,86 +226,33 @@ libavcodec-dev libxvidcore-dev libx264-dev libgtk-3-dev \
 libatlas-base-dev gfortran libopenblas-dev liblapack-dev liblapacke-dev qt5-default      
 ```
 
-#### Install dependencies for python3
-```Bash
-sudo apt install python3-dev python3-pip python3-tk
-sudo pip3 install numpy
-sudo pip3 install matplotlib
-```
-
-#### Modify matplotlibrc (line #41) as 'backend: TkAgg'
-```Bash
-sudo vim /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
-```
-
-#### Modify /usr/local/cuda/include/cuda_gl_interop.h and fix the symbolic link of libGL.so.
-```Bash
-sudo vim /usr/local/cuda/include/cuda_gl_interop.h
-```
-#### Here’s how the relevant lines (line #62~68) of cuda_gl_interop.h look like after the modification.
-```Bash
-//#if defined(__arm__) || defined(__aarch64__)
-//#ifndef GL_VERSION
-//#error Please include the appropriate gl headers before including cuda_gl_interop.h
-//#endif
-//#else
- #include <GL/gl.h>
-//#endif
-```
-
-#### Next, download opencv-3.4.0 source code, cmake and compile. Note that opencv_contrib modules (cnn/dnn stuffs) would cause problem on pycaffe, so after some experiments I decided not to include those modules at all.
 ```Bash
 mkdir -p ~/src && cd ~/src
 wget https://github.com/opencv/opencv/archive/3.4.0.zip -O opencv-3.4.0.zip
-unzip opencv-3.4.0.zip
+unzip opencv-3.4.0.zip && cd opencv-3.4.0
+wget https://github.com/opencv/opencv_contrib/archive/3.4.0.zip -O opencv_contrib-3.4.0.zip
+unzip opencv_contrib-3.4.0.zip
+cd ~/src/opencv-3.4.0 && mkdir build && cd build
 ```
 
-#### Build opencv (CUDA_ARCH_BIN="6.2" for TX2, or "5.3" for TX1)
 ```Bash
-cd ~/src/opencv-3.4.0
-mkdir build && cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+               -D CMAKE_INSTALL_PREFIX=/usr/local/ \
+               -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.4.0/modules \
+               -D CUDA_ARCH_BIN='7.2' \
+               -D WITH_CUDA=1 \
+               -D WITH_V4L=ON \
+               -D WITH_QT=ON \
+               -D WITH_OPENGL=ON \
+               -D CUDA_FAST_MATH=1 \
+               -D WITH_CUBLAS=1 \
+               -D OPENCV_GENERATE_PKGCONFIG=1 \
+               -D WITH_GTK_2_X=ON ..
+```
 
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
-        -D WITH_CUDA=ON -D CUDA_ARCH_BIN="7.2" -D CUDA_ARCH_PTX="" \
-        -D WITH_CUBLAS=ON -D ENABLE_FAST_MATH=ON -D CUDA_FAST_MATH=ON \
-        -D ENABLE_NEON=ON -D WITH_LIBV4L=ON -D BUILD_TESTS=OFF \
-        -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF \
-        -D WITH_QT=ON -D WITH_OPENGL=ON ..
-
+```Bash
 sudo make -j4 && sudo make install
 ```
-
-#### To verify the installation:
-```Bash
-ls /usr/local/lib/python3.6/dist-packages/cv2.*
-/usr/local/lib/python3.6/dist-packages/cv2.cpython-35m-aarch64-linux-gnu.so
-    
-ls /usr/local/lib/python2.7/dist-packages/cv2.*
-/use/local/lib/python2.7/dist-packages/cv2.so
-
-python3 -c 'import cv2; print(cv2.__version__)'
-python2 -c 'import cv2; print(cv2.__version__)'
-```
-
-##### TX2, Jetpack 4.3
-* Before
-
-![cv1](https://user-images.githubusercontent.com/53622566/84003020-f7c30680-a99b-11ea-8ed0-cb3fa51a9037.png)
-
-* After
-
-![cv2](https://user-images.githubusercontent.com/53622566/84003024-f8f43380-a99b-11ea-830e-ff9f7ce664ed.png)
-
-
-##### Xavier NX, Jetpack 4.4
-* Before
-
-![nx1](https://user-images.githubusercontent.com/53622566/84370728-42968580-ac0b-11ea-8f93-e265768e748f.png)
-
-* After
-
-![nx2](https://user-images.githubusercontent.com/53622566/84370906-7e314f80-ac0b-11ea-9a39-c1ded95e81d8.png)
-
 
 
 PyAudio
@@ -339,7 +281,7 @@ sudo apt install libffi-dev
 sudo pip3 install sounddevice
 ```
 
-librosa0.6.3
+Librosa0.6.3
 ------
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
@@ -397,32 +339,6 @@ sudo pip3 install numba==0.38.0 scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
 sudo pip3 install librosa==0.6.3
 ```
 
-
-exFAT_driver
-------
-```Bash
-sudo add-apt-repository universe
-sudo apt install exfat-fuse exfat-utils
-```
-
-
-JAVA
-------
-##### JRE
-```Bash
-sudo apt install default-jre
-```
-##### JDK
-```Bash
-sudo apt install default-jdk
-```
-
-
-kolourpaint4
-------
-```Bash
-sudo apt install kolourpaint4
-```
 
 PyQt5
 ------
@@ -494,46 +410,15 @@ git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
 ```
 
-#### Verification
-```Bash
-import torch
-print(torch.__version__)
-print('CUDA available: ' + str(torch.cuda.is_available()))
-print('cuDNN version: ' + str(torch.backends.cudnn.version()))
-a = torch.cuda.FloatTensor(2).zero_()
-print('Tensor a = ' + str(a))
-b = torch.randn(2).cuda()
-print('Tensor b = ' + str(b))
-c = a + b
-print('Tensor c = ' + str(c))
-```
-```Bash
-import torchvision
-print(torchvision.version)
-```
 
-CloneSDcard
-------
-- [dd command1](https://blog.gtwang.org/linux/dd-command-examples/)
-- [dd command2](https://blog.xuite.net/mb1016.flying/linux/28346040)
-##### find your SD card
-```Bash
-sudo fdisk -l
-```
-##### clone SD card to img
-```Bash
-sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.img.gz
-```
-##### clone img to SD card
-```Bash
-sudo gunzip -c ~/image.img.gz | sudo dd of=/dev/sdb bs=4M status=progress
-```
+
 
 Others
 ------
-
+- Useful
 ```Bash
-sudo pip install PyYAML>=5.3 keras==2.3.1 pyusb click xlsxwriter tqdm
+sudo pip install PyYAML==5.3.1 --ignore-installed
+sudo pip install keras==2.3.1 pyusb click xlsxwriter tqdm
 ```
 
 - Anonymous FTP server
@@ -558,4 +443,47 @@ anon_upload_enable=YES
 
 ```Bash
 sudo systemctl restart vsftpd
+```
+
+- Browser
+```Bash
+sudo apt install firefox
+```
+
+- Kolourpaint4
+```Bash
+sudo apt install kolourpaint4
+```
+
+- exFAT_driver
+```Bash
+sudo add-apt-repository universe
+sudo apt install exfat-fuse exfat-utils
+```
+
+- Java
+##### JRE
+```Bash
+sudo apt install default-jre
+```
+##### JDK
+```Bash
+sudo apt install default-jdk
+```
+
+- CloneSDcard
+> [dd command1](https://blog.gtwang.org/linux/dd-command-examples/)
+
+> [dd command2](https://blog.xuite.net/mb1016.flying/linux/28346040)
+##### find your SD card
+```Bash
+sudo fdisk -l
+```
+##### clone SD card to img
+```Bash
+sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.img.gz
+```
+##### clone img to SD card
+```Bash
+sudo gunzip -c ~/image.img.gz | sudo dd of=/dev/sdb bs=4M status=progress
 ```
