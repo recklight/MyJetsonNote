@@ -376,7 +376,6 @@ sudo make install
 python3 configure.py
 make
 sudo make install
-sudo pip3 install PyQt5
 ```
 - Install  ie multimedia
 ```Bash
