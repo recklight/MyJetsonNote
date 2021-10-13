@@ -223,17 +223,21 @@ libatlas-base-dev gfortran libopenblas-dev liblapack-dev liblapacke-dev qt5-defa
 ```
 
 ```Bash
-wget https://github.com/opencv/opencv/archive/3.4.0.zip -O opencv-3.4.0.zip
-unzip opencv-3.4.0.zip && cd opencv-3.4.0
-wget https://github.com/opencv/opencv_contrib/archive/3.4.0.zip -O opencv_contrib-3.4.0.zip
-unzip opencv_contrib-3.4.0.zip
-cd .. && mkdir build && cd build
+sudo apt purge libopencv*
+```
+
+```Bash
+wget https://github.com/opencv/opencv/archive/4.5.0.zip -O opencv-4.5.0.zip
+unzip opencv-4.5.0.zip && cd opencv-4.5.0
+wget https://github.com/opencv/opencv_contrib/archive/4.5.0.zip -O opencv_contrib-4.5.0.zip
+unzip opencv_contrib-4.5.0.zip
+mkdir build && cd build
 ```
 
 ```Bash
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
                -D CMAKE_INSTALL_PREFIX=/usr/local/ \
-               -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.4.0/modules \
+               -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.5.0/modules \
                -D CUDA_ARCH_BIN='7.2' \
                -D WITH_CUDA=1 \
                -D WITH_V4L=ON \
