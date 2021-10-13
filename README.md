@@ -412,6 +412,11 @@ cd torchvision && sudo python setup.py install
 
 Others
 ------
+- Matplotlib
+```
+sudo apt-get install python3-matplotlib
+```
+
 - Useful
 ```Bash
 sudo pip install PyYAML==5.3.1 --ignore-installed
