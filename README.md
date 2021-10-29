@@ -103,9 +103,12 @@ nvgstcapture --prev-res=2
 ```Bash
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 150
+```
+版本選用
+```Bash
 sudo update-alternatives --config python
 ```
-根據提示選用預設版本, 再次運行python確定設定成功
+
 
 ### Install new versions of software
 ```Bash
@@ -123,87 +126,43 @@ sudo pip3 install jetson-stats
 安裝Tensorflow
 ------
 * [NVIDIA DOC.](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html)
-* Note: As of the 20.02 TensorFlow release, the package name has changed from tensorflow-gpu to tensorflow.
-
-1. Install system packages required by TensorFlow:
+1. Install [JetPack](https://developer.nvidia.com/embedded/jetpack) on your Jetson device.
+2. Install system packages required by TensorFlow:
 ```Bash
 sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
-sudo pip3 install -U pip testresources setuptools==49.6.0
-sudo pip3 install -U numpy==1.16.1 future==0.17.1 mock==3.0.5 \
-h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
 ```
 
-2. Install TensorFlow using the pip3 command. 
-* 注意安裝的 Jetpack 版本
-* Check the [TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/)
-
-**TX2**
-* tensorflow-gpu 可以安裝 v1.15.0 或 v2.0.0
+3. Install and upgrade pip3
 ```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow-gpu==1.15.0+nv19.12
-# sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow-gpu==2.0.0+nv20.1
+sudo apt-get install python3-pip
+sudo pip3 install -U pip testresources setuptools==49.6.0 
 ```
 
-**Xavier NX, AGX**
-- JetPack 4.4.x
+4. Install the Python package dependencies
 ```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
-```
-or
-```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==1.15.2+nv20.6
-```
-- JetPack 4.5.x
-```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v45 'tensorflow<2'
+sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 protobuf pybind11 cython pkgconfig
+sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 ```
 
-3. Verifying The Installation
-To verify that TensorFlow has been successfully installed,  you'll need to launch a Python prompt and import TensorFlow.
+5. Install TensorFlow using the pip3 command. 
+- 注意安裝的 Jetpack 版本
+> Check the [v44 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v44/tensorflow/)
+> Check the [v45 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v45/tensorflow/)
+> Check the [v46 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/)
+
+- This command will install the latest version of TensorFlow compatible with JetPack 4.6.
 ```Bash
-python
-import tensorflow
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 ```
 
-安裝多版本Tensorflow
-------
-1. Set up the Virtual Environment
-First, install the virtualenv package and create a new Python 3 virtual environment:
+- Note: TensorFlow version 2 was recently released and is not fully backward compatible with TensorFlow 1.x. If you would prefer to use a TensorFlow 1.x package, it can be installed by specifying the TensorFlow version to be less than 2, as in the following command
 ```Bash
-sudo apt install virtualenv
-python3 -m virtualenv -p python3 <chosen_venv_name>
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 'tensorflow<2'
 ```
 
-2. Activate the Virtual Environment
-Next, activate the virtual environment:
+- If you want to install the latest version of TensorFlow supported by a particular version of JetPack, issue the following command:
 ```Bash
-source <chosen_venv_name>/bin/activate
-```
-
-3. Install the desired version of TensorFlow and its dependencies:
-```Bash
-pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta setuptools testresources
-pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==$TF_VERSION+nv$NV_VERSION
-```
-
-4. Deactivate the Virtual Environment
-```Bash
-deactivate
-```
-
-5. Run a Specific Version of TensorFlow
-After the virtual environment has been set up, simply activate it to have access to the specific version of TensorFlow. Make sure to deactivate the environment after use:
-```Bash
-source <chosen_venv_name>/bin/activate 
-<Run the desired TensorFlow scripts>
-deactivate
-```
-
-6. Upgrading TensorFlow
-Note: Due to the recent package renaming, if the TensorFlow version you currently have installed is older than the 20.02 release, you must uninstall it before upgrading to avoid conflicts. See the section on Uninstalling TensorFlow for more information.
-To upgrade to a more recent release of TensorFlow, if one is available, run the install command with the ‘upgrade’ flag:
-```Bash
-sudo pip3 install --upgrade --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$44 tensorflow
+sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$JP_VERSION tensorflow
 ```
 
 
@@ -211,7 +170,6 @@ Opencv
 ------
 ```Bash
 sudo apt install python3-dev python3-pip python3-tk
-sudo apt install --only-upgrade g++-5 cpp-5 gcc-5
 sudo apt install build-essential make cmake cmake-curses-gui \
 g++ libavformat-dev libavutil-dev \
 libswscale-dev libv4l-dev libeigen3-dev \
@@ -236,17 +194,22 @@ mkdir build && cd build
 
 ```Bash
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
-               -D CMAKE_INSTALL_PREFIX=/usr/local/ \
-               -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.5.0/modules \
-               -D CUDA_ARCH_BIN='7.2' \
-               -D WITH_CUDA=1 \
-               -D WITH_V4L=ON \
-               -D WITH_QT=ON \
-               -D WITH_OPENGL=ON \
-               -D CUDA_FAST_MATH=1 \
-               -D WITH_CUBLAS=1 \
-               -D OPENCV_GENERATE_PKGCONFIG=1 \
-               -D WITH_GTK_2_X=ON ..
+      -D CMAKE_INSTALL_PREFIX=/usr/local/ \
+      -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.5.0/modules \
+      -D CUDA_ARCH_BIN='7.2' \
+      -D WITH_CUDA=1 \
+      -D WITH_V4L=ON \
+      -D WITH_QT=ON \
+      -D WITH_FFMPEG=ON \
+      -D WITH_OPENGL=ON \
+      -D CUDA_FAST_MATH=1 \
+      -D WITH_CUBLAS=1 \
+      -D OPENCV_GENERATE_PKGCONFIG=1 \
+      -D BUILD_opencv_python2=1 \
+      -D BUILD_opencv_python3=1 \
+      -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
+      -D WITH_GTK_2_X=ON ..
+
 ```
 
 ```Bash
