@@ -1,10 +1,9 @@
 # MyJetsonNote
-Jetson Series - TX2, Xavier AGX, Xavier NX
-------
-------
+For Jetson Series - TX2, Xavier AGX, Xavier NX
 
-目錄
-------
+
+
+# 目錄
 * [安装系統](#安装系統)
 * [檢查安裝](#檢查安裝)  
 * [修改默認python版本](#修改默認python版本)
@@ -18,8 +17,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [Others](#Others) 
 
 
-安装系統
-------
+# 安装系統
 ### NX
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * [JETPACK SDK](https://developer.nvidia.com/embedded/jetpack)
@@ -59,8 +57,7 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
 
-檢查安裝
-------
+# 檢查安裝
 1. CUDA
 在Tegra上nvidia-smi是沒有作用的, 直接使用指令查看CUDA版本
 ```Bash
@@ -96,8 +93,7 @@ sudo find / -name tensorrt
 nvgstcapture --prev-res=2
 ```
 
-修改默認python版本
-------
+# 修改默認python版本
 使用alternatives管理多版本軟體
 將python版本指定為python2.7
 ```Bash
@@ -113,14 +109,12 @@ sudo update-alternatives --config python
 ```
 
 
-Install new versions of software
-------
+# Install new versions of software
 ```Bash
 sudo apt update && sudo apt upgrade
 ```
 
-Jetson stats
-------
+# Jetson stats
 [jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2] Works with all NVIDIA Jetson ecosystem.
 Install pip 
 ```Bash
@@ -132,8 +126,7 @@ sudo pip3 install jetson-stats
 ```
 
 
-Tensorflow
-------
+# Tensorflow
 * [NVIDIA DOC.](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html)
 1. Install [JetPack](https://developer.nvidia.com/embedded/jetpack) on your Jetson device.
 2. Install system packages required by TensorFlow:
@@ -181,8 +174,7 @@ sudo pip3 install --extra-index-url https://developer.download.nvidia.com/comput
 ```
 
 
-Opencv 4.5
-------
+# Opencv 4.5
 ```Bash
 sudo apt install python3-dev python3-pip python3-tk \
 build-essential make cmake cmake-curses-gui \
@@ -235,8 +227,7 @@ sudo make -j4 && sudo make install
 ```
 
 
-PyAudio & Sounddevice
-------
+# PyAudio & Sounddevice
 ```Bash
 sudo apt install python-all-dev portaudio19-dev libffi-dev
 ```
@@ -244,8 +235,7 @@ sudo apt install python-all-dev portaudio19-dev libffi-dev
 sudo pip3 install pyaudio sounddevice
 ```
 
-Librosa 0.6.3
-------
+# Librosa 0.6.3
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
 > [numba/llvmlite](https://github.com/numba/llvmlite)
@@ -303,8 +293,7 @@ sudo pip3 install librosa==0.6.3
 ```
 
 
-PyTorch
-------
+# PyTorch
 - [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
 #### PyTorch 1.6.0 + Torchvision 0.7.0
 ```Bash
@@ -329,8 +318,7 @@ cd torchvision && sudo python setup.py install
 ```
 
 
-PyQt5
-------
+# PyQt5
 #### Method 1
 ```Bash
 sudo apt install qt5-default python3-pyqt5 pyqt5-dev-tools qttools5-dev-tools
@@ -373,8 +361,7 @@ sudo apt install python3-pyqt5.qtmultimedia
 ```
 
 
-Others
-------
+# Others
 - Matplotlib
 ```
 sudo apt-get install python3-matplotlib
