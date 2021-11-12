@@ -9,15 +9,15 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 * [修改默認python版本](#修改默認python版本)
 * [Jetson stats](#Jetson-stats)
 * [Tensorflow](#Tensorflow) 
-* [Opencv 4.5](#Opencv-4.5) 
-* [PyAudio & Sounddevice](#PyAudio-&-Sounddevice) 
-* [Librosa 0.6.3](#Librosa-0.6.3)
+* [Opencv 4.5](#opencv4.5) 
+* [PyAudio & Sounddevice](#PyAudio&Sounddevice) 
+* [Librosa 0.6.3](#Librosa0.6.3)
 * [PyTorch](#PyTorch)
 * [PyQt5](#PyQt5)
 * [Others](#Others) 
 
 
-# 安装系統
+# 安装系統 <a name="安装系統"></a>
 ### NX
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * [JETPACK SDK](https://developer.nvidia.com/embedded/jetpack)
@@ -93,7 +93,7 @@ sudo find / -name tensorrt
 nvgstcapture --prev-res=2
 ```
 
-# 修改默認python版本
+# 修改默認python版本 <a name="修改默認python版本"></a>
 使用alternatives管理多版本軟體
 將python版本指定為python2.7
 ```Bash
@@ -114,7 +114,7 @@ sudo update-alternatives --config python
 sudo apt update && sudo apt upgrade
 ```
 
-# Jetson stats
+# Jetson stats <a name="Jetson-stats"></a>
 [jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2] Works with all NVIDIA Jetson ecosystem.
 Install pip 
 ```Bash
@@ -174,7 +174,7 @@ sudo pip3 install --extra-index-url https://developer.download.nvidia.com/comput
 ```
 
 
-# Opencv 4.5
+# Opencv 4.5 <a name="opencv4.5"></a>
 ```Bash
 sudo apt install python3-dev python3-pip python3-tk \
 build-essential make cmake cmake-curses-gui \
@@ -227,7 +227,7 @@ sudo make -j4 && sudo make install
 ```
 
 
-# PyAudio & Sounddevice
+# PyAudio & Sounddevice <a name="PyAudio&Sounddevice"></a>
 ```Bash
 sudo apt install python-all-dev portaudio19-dev libffi-dev
 ```
@@ -235,7 +235,7 @@ sudo apt install python-all-dev portaudio19-dev libffi-dev
 sudo pip3 install pyaudio sounddevice
 ```
 
-# Librosa 0.6.3
+# Librosa 0.6.3 <a name="Librosa0.6.3"></a>
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
 > [numba/llvmlite](https://github.com/numba/llvmlite)
