@@ -8,14 +8,13 @@ Jetson Series - TX2, Xavier AGX, Xavier NX
 * [安装系統](#安装系統)
 * [檢查安裝](#檢查安裝)  
 * [修改默認python版本](#修改默認python版本)
-* [安裝Tensorflow](#安裝Tensorflow) 
-* [安裝多版本Tensorflow](#安裝多版本Tensorflow) 
-* [Opencv](#Opencv) 
-* [PyAudio](#PyAudio) 
-* [Sounddevice](#Sounddevice) 
-* [Librosa0.6.3](#Librosa0.6.3)
-* [PyQt5](#PyQt5) 
-* [PyTorch](#PyTorch) 
+* [Jetson stats](#Jetson\tstats)
+* [Tensorflow](#Tensorflow) 
+* [Opencv 4.5](#Opencv\t4.5) 
+* [PyAudio & Sounddevice](#PyAudio\t&\tSounddevice) 
+* [Librosa 0.6.3](#Librosa\t0.6.3)
+* [PyTorch](#PyTorch)
+* [PyQt5](#PyQt5)
 * [Others](#Others) 
 
 
@@ -100,30 +99,40 @@ nvgstcapture --prev-res=2
 修改默認python版本
 ------
 使用alternatives管理多版本軟體
+將python版本指定為python2.7
 ```Bash
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 100
+```
+將python版本指定為python3.6
+```Bash
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 150
 ```
-版本選用
+選用python版本
 ```Bash
 sudo update-alternatives --config python
 ```
 
 
-### Install new versions of software
+Install new versions of software
+------
 ```Bash
-sudo apt update
-sudo apt upgrade
-sudo apt install python3-pip
+sudo apt update && sudo apt upgrade
 ```
 
-### Dynamic interface where is showed the status of your NVIDIA Jetson (command:  jtop)
+Jetson stats
+------
+[jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2] Works with all NVIDIA Jetson ecosystem.
+Install pip 
+```Bash
+sudo apt install python3-pip
+```
+Install 
 ```Bash
 sudo pip3 install jetson-stats
 ```
 
 
-安裝Tensorflow
+Tensorflow
 ------
 * [NVIDIA DOC.](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html)
 1. Install [JetPack](https://developer.nvidia.com/embedded/jetpack) on your Jetson device.
@@ -135,20 +144,26 @@ sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpe
 3. Install and upgrade pip3
 ```Bash
 sudo apt-get install python3-pip
+```
+```Bash
 sudo pip3 install -U pip testresources setuptools==49.6.0 
 ```
 
 4. Install the Python package dependencies
 ```Bash
 sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 protobuf pybind11 cython pkgconfig
+```
+```Bash
 sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 ```
 
 5. Install TensorFlow using the pip3 command. 
 - 注意安裝的 Jetpack 版本
-> Check the [v44 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v44/tensorflow/)
-> Check the [v45 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v45/tensorflow/)
-> Check the [v46 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/)
+> [v44 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v44/tensorflow/)
+
+> [v45 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v45/tensorflow/)
+
+> [v46 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/)
 
 - This command will install the latest version of TensorFlow compatible with JetPack 4.6.
 ```Bash
@@ -166,11 +181,11 @@ sudo pip3 install --extra-index-url https://developer.download.nvidia.com/comput
 ```
 
 
-Opencv
+Opencv 4.5
 ------
 ```Bash
-sudo apt install python3-dev python3-pip python3-tk
-sudo apt install build-essential make cmake cmake-curses-gui \
+sudo apt install python3-dev python3-pip python3-tk \
+build-essential make cmake cmake-curses-gui \
 g++ libavformat-dev libavutil-dev \
 libswscale-dev libv4l-dev libeigen3-dev \
 libglew-dev libgtk2.0-dev libdc1394-22-dev libxine2-dev \
@@ -185,10 +200,14 @@ sudo apt purge libopencv*
 ```
 
 ```Bash
-wget https://github.com/opencv/opencv/archive/4.5.0.zip -O opencv-4.5.0.zip
-unzip opencv-4.5.0.zip && cd opencv-4.5.0
-wget https://github.com/opencv/opencv_contrib/archive/4.5.0.zip -O opencv_contrib-4.5.0.zip
-unzip opencv_contrib-4.5.0.zip
+wget https://github.com/opencv/opencv/archive/4.5.0.zip -O opencv-4.5.0.zip \
+&& unzip opencv-4.5.0.zip && cd opencv-4.5.0
+```
+```Bash
+wget https://github.com/opencv/opencv_contrib/archive/4.5.0.zip -O opencv_contrib-4.5.0.zip \
+&& unzip opencv_contrib-4.5.0.zip
+```
+```Bash
 mkdir build && cd build
 ```
 
@@ -209,7 +228,6 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_opencv_python3=1 \
       -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
       -D WITH_GTK_2_X=ON ..
-
 ```
 
 ```Bash
@@ -217,33 +235,16 @@ sudo make -j4 && sudo make install
 ```
 
 
-PyAudio
-------
-#### Method 1
-```Bash
-sudo apt install python-all-dev portaudio19-dev
-sudo pip3 install pyaudio
-```
-
-#### Method2
-```Bash
-# Download pa_stable_v190600_20161030.tgz from http://www.portaudio.com/download.html
-# Unzip
-
-sudo apt install libasound-dev
-./configure && make
-sudo make install
-sudo apt install python-pyaudio python3-pyaudio
-```
-
-Sounddevice
+PyAudio & Sounddevice
 ------
 ```Bash
-sudo apt install libffi-dev
-sudo pip3 install sounddevice
+sudo apt install python-all-dev portaudio19-dev libffi-dev
+```
+```Bash
+sudo pip3 install pyaudio sounddevice
 ```
 
-Librosa0.6.3
+Librosa 0.6.3
 ------
 > [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 
@@ -302,6 +303,32 @@ sudo pip3 install librosa==0.6.3
 ```
 
 
+PyTorch
+------
+- [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
+#### PyTorch 1.6.0 + Torchvision 0.7.0
+```Bash
+wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+sudo apt install python3-pip libopenblas-base libopenmpi-dev
+sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
+
+sudo apt install libjpeg-dev zlib1g-dev
+git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
+cd torchvision && sudo python setup.py install
+```
+
+#### PyTorch 1.7.0 + Torchvision 0.8.1
+```Bash
+wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+sudo apt install python3-pip libopenblas-base libopenmpi-dev
+sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+
+sudo apt install libjpeg-dev zlib1g-dev
+git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
+cd torchvision && sudo python setup.py install
+```
+
+
 PyQt5
 ------
 #### Method 1
@@ -346,32 +373,6 @@ sudo apt install python3-pyqt5.qtmultimedia
 ```
 
 
-PyTorch
-------
-- [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
-#### PyTorch 1.6.0 + Torchvision 0.7.0
-```Bash
-wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-
-sudo apt install libjpeg-dev zlib1g-dev
-git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
-cd torchvision && sudo python setup.py install
-```
-
-#### PyTorch 1.7.0 + Torchvision 0.8.1
-```Bash
-wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
-sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
-
-sudo apt install libjpeg-dev zlib1g-dev
-git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
-cd torchvision && sudo python setup.py install
-```
-
-
 Others
 ------
 - Matplotlib
@@ -379,10 +380,18 @@ Others
 sudo apt-get install python3-matplotlib
 ```
 
-- Useful
+- others
 ```Bash
 sudo pip install PyYAML==5.3.1 --ignore-installed
-sudo pip install keras==2.3.1 pyusb click xlsxwriter tqdm
+```
+```Bash
+sudo pip install keras==2.3.1 
+```
+```Bash
+sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
+```
+```Bash
+sudo pip install pandas==1.1.4 seaborn==0.11.0
 ```
 
 - Anonymous FTP server
