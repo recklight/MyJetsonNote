@@ -13,6 +13,7 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 * [PyAudio & Sounddevice](#PyAudio&Sounddevice) 
 * [Librosa 0.6.3](#Librosa0.6.3)
 * [PyTorch](#PyTorch)
+* [Torchaudio](#Torchaudio)
 * [PyQt5](#PyQt5)
 * [Others](#Others) 
 
@@ -293,7 +294,7 @@ sudo pip3 install librosa==0.6.3
 ```
 
 
-# PyTorch
+# PyTorch <a name="PyTorch"></a>
 - [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
 #### PyTorch 1.6.0 + Torchvision 0.7.0
 ```Bash
@@ -315,6 +316,19 @@ sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
+```
+
+# Torchaudio <a name="Torchaudio"></a>
+- [torchaudio](https://github.com/pytorch/audio)
+
+```Bash
+git clone https://github.com/pytorch/audio.git torchaudio --branch v0.7.2
+```
+```Bash
+sudo apt install sox libsox-dev libsox-fmt-all
+```
+```Bash
+sudo python setup.py intsall
 ```
 
 
