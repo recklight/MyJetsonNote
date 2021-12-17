@@ -328,7 +328,7 @@ git clone https://github.com/pytorch/audio.git torchaudio --branch v0.7.2
 sudo apt install sox libsox-dev libsox-fmt-all
 ```
 ```Bash
-sudo python setup.py intsall
+cd torchaudio && sudo python setup.py install
 ```
 
 
@@ -382,6 +382,12 @@ sudo apt-get install python3-matplotlib
 ```
 
 - others
+```Bash
+sudo dpkg-reconfigure dash
+```
+```Bash
+sudo apt install filezilla
+```
 ```Bash
 sudo pip install PyYAML==5.3.1 --ignore-installed
 ```
@@ -455,9 +461,9 @@ sudo fdisk -l
 ```
 ###### clone SD card to img
 ```Bash
-sudo dd if=/dev/sdb conv=sync,noerror bs=4M status=progress | gzip -c > ~/image.img.gz
+sudo dd if=/dev/sda conv=sync,noerror bs=1M status=progress | gzip -c > ./image.img.gz
 ```
 ###### clone img to SD card
 ```Bash
-sudo gunzip -c ~/image.img.gz | sudo dd of=/dev/sdb bs=4M status=progress
+sudo gunzip -c ./image.img.gz | sudo dd of=/dev/sda bs=1M status=progress
 ```
