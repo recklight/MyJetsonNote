@@ -10,6 +10,7 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 * [Jetson stats](#Jetson-stats)
 * [Tensorflow](#Tensorflow) 
 * [Opencv 4.5](#opencv4.5) 
+* [Opencv 3.4 (No opencv_contrib)](#opencv3.4) 
 * [PyAudio & Sounddevice](#PyAudio&Sounddevice) 
 * [Librosa 0.6.3](#Librosa0.6.3)
 * [PyTorch](#PyTorch)
@@ -227,6 +228,95 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 sudo make -j4 && sudo make install
 ```
 
+
+Opencv 3.4 (No opencv_contrib)<a name="opencv3.4"></a>
+------
+> [Reference1](https://jkjung-avt.github.io/opencv3-on-tx2/)
+> [Reference2](https://www.jetsonhacks.com/2018/11/08/build-opencv-3-4-on-nvidia-jetson-agx-xavier-developer-kit/)
+
+```Bash
+sudo apt update
+sudo apt dist-upgrade
+sudo apt install --only-upgrade g++-5 cpp-5 gcc-5
+sudo apt install build-essential make cmake cmake-curses-gui \
+g++ libavformat-dev libavutil-dev \
+libswscale-dev libv4l-dev libeigen3-dev \
+libglew-dev libgtk2.0-dev libdc1394-22-dev libxine2-dev \
+libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+libjpeg8-dev libjpeg-turbo8-dev libtiff5-dev \
+libavcodec-dev libxvidcore-dev libx264-dev libgtk-3-dev \
+libatlas-base-dev gfortran libopenblas-dev liblapack-dev liblapacke-dev qt5-default      
+```
+
+#### Install dependencies for python3
+```Bash
+sudo apt install python3-dev python3-pip python3-tk
+sudo pip3 install numpy
+sudo pip3 install matplotlib
+```
+
+#### Modify matplotlibrc (line #41) as 'backend: TkAgg'
+```Bash
+sudo vim /usr/local/lib/python3.6/dist-packages/matplotlib/mpl-data/matplotlibrc
+```
+
+#### Modify /usr/local/cuda/include/cuda_gl_interop.h and fix the symbolic link of libGL.so.
+```Bash
+sudo vim /usr/local/cuda/include/cuda_gl_interop.h
+```
+#### Here’s how the relevant lines (line #62~68) of cuda_gl_interop.h look like after the modification.
+```Bash
+//#if defined(__arm__) || defined(__aarch64__)
+//#ifndef GL_VERSION
+//#error Please include the appropriate gl headers before including cuda_gl_interop.h
+//#endif
+//#else
+ #include <GL/gl.h>
+//#endif
+```
+
+#### Next, download opencv-3.4.0 source code, cmake and compile. Note that opencv_contrib modules (cnn/dnn stuffs) would cause problem on pycaffe, so after some experiments I decided not to include those modules at all.
+```Bash
+mkdir -p ~/src && cd ~/src
+wget https://github.com/opencv/opencv/archive/3.4.0.zip -O opencv-3.4.0.zip
+unzip opencv-3.4.0.zip
+```
+
+#### Build opencv (CUDA_ARCH_BIN="6.2" for TX2, or "5.3" for TX1)
+```Bash
+cd ~/src/opencv-3.4.0
+mkdir build && cd build
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE  \
+      -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D WITH_CUDA=ON  \
+      -D CUDA_ARCH_BIN="7.2"  \
+      -D CUDA_ARCH_PTX="" \
+      -D WITH_CUBLAS=ON  \
+      -D ENABLE_FAST_MATH=ON  \
+      -D CUDA_FAST_MATH=ON \
+      -D ENABLE_NEON=ON  \
+      -D WITH_LIBV4L=ON  \
+      -D BUILD_TESTS=OFF \
+      -D BUILD_PERF_TESTS=OFF  \
+      -D BUILD_EXAMPLES=OFF \
+      -D WITH_QT=ON  \
+      -D WITH_OPENGL=ON ..
+
+sudo make -j4 && sudo make install
+```
+
+#### To verify the installation:
+```Bash
+ls /usr/local/lib/python3.6/dist-packages/cv2.*
+/usr/local/lib/python3.6/dist-packages/cv2.cpython-35m-aarch64-linux-gnu.so
+    
+ls /usr/local/lib/python2.7/dist-packages/cv2.*
+/use/local/lib/python2.7/dist-packages/cv2.so
+
+python3 -c 'import cv2; print(cv2.__version__)'
+python2 -c 'import cv2; print(cv2.__version__)'
+```
 
 # PyAudio & Sounddevice <a name="PyAudio&Sounddevice"></a>
 ```Bash
