@@ -264,7 +264,7 @@ cmake \
 ```
 
 ```Bash
-make -j$(nproc) && make install
+sudo make -j$(nproc) && sudo make install
 ```
 
 # Opencv 3.4 (No opencv_contrib)<a name="opencv3.4"></a>
@@ -358,7 +358,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE  \
 ```
 
 ```Bash
-make -j$(nproc) && make install
+sudo make -j$(nproc) && sudo make install
 ```
 
 #### To verify the installation:
@@ -406,7 +406,7 @@ llvmlite versions  |compatible LLVM versions
 #### Upgrade the SETUP tools:
 
 ```Bash
-sudo pip3 install -U setuptools
+sudo pip3 install -U setuptools 
 sudo pip3 install cython
 ```
 
@@ -417,7 +417,7 @@ wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
 tar -xvf llvm-7.0.1.src.tar.xz
 cd llvm-7.0.1.src && mkdir llvm_build_dir && cd llvm_build_dir/
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
-sudo make -j4 && sudo make install
+sudo make -j$(nproc) && sudo make install
 ```
 
 ```
@@ -437,7 +437,7 @@ sudo pip3 install llvmlite==0.32.1
 
 ```Bash
 sudo apt install libblas-dev liblapack-dev libatlas-base-dev gfortran
-sudo pip3 install numba==0.38.0 scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
+sudo pip3 install numba==0.38.0 scipy==1.5.4 joblib==0.12 scikit-learn==0.21.1
 ```
 
 #### Install Librosa
@@ -472,6 +472,18 @@ sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
+```
+
+### PyTorch 1.10.0 + Torchvision 0.11.3
+
+```Bash
+wget https://nvidia.box.com/shared/static/fjtbno0vpo676a25cgvuqc1wty0fkkg6.whl -O torch-1.10.0-cp36-cp36m-linux_aarch64.whl
+sudo apt install python3-pip libopenblas-base libopenmpi-dev libjpeg-dev zlib1g-dev
+sudo pip3 install Cython torch-1.10.0-cp36-cp36m-linux_aarch64.whl
+
+git clone --branch v0.11.3 https://github.com/pytorch/vision torchvision
+cd torchvision && sudo python setup.py install
+
 ```
 
 # Torchaudio <a name="Torchaudio"></a>
@@ -544,10 +556,18 @@ sudo apt install python3-pyqt5.qtmultimedia
 ### Matplotlib
 
 ```
-sudo apt-get install python3-matplotlib
+sudo apt install python3-matplotlib  # 不推薦, 但是如果你真的裝不起來再試試這個
 ```
 
 ### others
+
+```Bash
+sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
+```
+
+```Bash
+sudo pip install pandas==1.1.4 seaborn==0.11.0 PyYAML==5.3.1 --ignore-installed
+```
 
 ```Bash
 sudo dpkg-reconfigure dash  # select No
@@ -555,18 +575,6 @@ sudo dpkg-reconfigure dash  # select No
 
 ```Bash
 sudo apt install filezilla
-```
-
-```Bash
-sudo pip install PyYAML==5.3.1 --ignore-installed
-```
-
-```Bash
-sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
-```
-
-```Bash
-sudo pip install pandas==1.1.4 seaborn==0.11.0
 ```
 
 ### Anonymous FTP server <a name="FTPserver"></a>
@@ -642,3 +650,9 @@ sudo gunzip -c ./backup.img.gz | sudo dd of=/dev/sda bs=1M status=progress
 ```
 
 # AGX Fast Backup <a name="AGXBackup"></a>
+
+### AGX環境-快速備份與平展, 不須透過 NVIDIA SDK Manager, 平均20分鐘內可安裝完成一台
+
+```Bash
+Coming soon
+```
