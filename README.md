@@ -510,14 +510,14 @@ _If build wheel error, try_ `Method 2`
 
 ```Bash
 sudo apt install qt5-default python3-pyqt5 pyqt5-dev-tools qttools5-dev-tools
-sudo pip3 install pyqt5
+sudo pip3 install pyqt5==5.15.6 pyqt5-sip==12.9.1
 ```
 
 ```Bash
 # sudo pip3 install sip==5.0.1
 ```
 
-#### Method 2
+#### Method 2 (JetPack 版本大於4.4 建議使用此種方式)
 
 ###### _Install SIP_
 
@@ -531,8 +531,14 @@ sudo apt remove python3-sip
 ```
 
 ```Bash
+wget https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.tar.gz
+tar -xvf sip-4.19.25.tar.gz
+cd sip-4.19.25
+```
+
+```Bash
 python3 configure.py
-make && sudo make install
+make -j$(nproc) && sudo make install
 ```
 
 ###### _Install PyQt5_
@@ -540,9 +546,11 @@ make && sudo make install
 - [PyQt Reference Guide](https://www.riverbankcomputing.com/static/Docs/PyQt5/installation.html)
 - [Download PyQt5 source](https://riverbankcomputing.com/software/pyqt/download5)
 
+###### _使用 版本 PyQt5-5.15.4.tar.gz, 下載後並解壓_
+
 ```Bash
 python3 configure.py
-make && sudo make install
+make -j$(nproc) && sudo make install
 ```
 
 ###### _Install ie multimedia_
@@ -560,6 +568,10 @@ sudo apt install python3-matplotlib  # 不推薦, 但是如果你真的裝不起
 ```
 
 ### others
+
+```Bash
+sudo pip install pyqtgraph==0.11.1
+```
 
 ```Bash
 sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
