@@ -437,7 +437,7 @@ sudo pip3 install llvmlite==0.32.1
 
 ```Bash
 sudo apt install libblas-dev liblapack-dev libatlas-base-dev gfortran
-sudo pip3 install numba==0.38.0 scipy==1.5.4 joblib==0.12 scikit-learn==0.21.1
+sudo pip3 install numba==0.38.0 scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
 ```
 
 #### Install Librosa
@@ -450,14 +450,20 @@ sudo pip3 install librosa==0.6.3
 
 - [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
 
+###
+
+```Bash
+sudo apt install python3-pip libopenblas-base libopenmpi-dev
+sudo apt install libjpeg-dev zlib1g-dev
+sudo pip3 install Cython
+
+```
+
 ### PyTorch 1.6.0 + Torchvision 0.7.0
 
 ```Bash
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-
-sudo apt install libjpeg-dev zlib1g-dev
+sudo pip3 install torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
 git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
 cd torchvision && sudo python setup.py install
 ```
@@ -466,11 +472,17 @@ cd torchvision && sudo python setup.py install
 
 ```Bash
 wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
-sudo apt install python3-pip libopenblas-base libopenmpi-dev
-sudo pip3 install Cython torch-1.7.0-cp36-cp36m-linux_aarch64.whl
-
-sudo apt install libjpeg-dev zlib1g-dev
+sudo pip3 install torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 git clone --branch v0.8.1 https://github.com/pytorch/vision torchvision
+cd torchvision && sudo python setup.py install
+```
+
+### PyTorch 1.8.0 + Torchvision 0.9.0
+
+```Bash
+wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -O torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+git clone --branch v0.9.0 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
 ```
 
@@ -478,9 +490,7 @@ cd torchvision && sudo python setup.py install
 
 ```Bash
 wget https://nvidia.box.com/shared/static/fjtbno0vpo676a25cgvuqc1wty0fkkg6.whl -O torch-1.10.0-cp36-cp36m-linux_aarch64.whl
-sudo apt install python3-pip libopenblas-base libopenmpi-dev libjpeg-dev zlib1g-dev
-sudo pip3 install Cython torch-1.10.0-cp36-cp36m-linux_aarch64.whl
-
+sudo pip3 install torch-1.10.0-cp36-cp36m-linux_aarch64.whl
 git clone --branch v0.11.3 https://github.com/pytorch/vision torchvision
 cd torchvision && sudo python setup.py install
 
@@ -578,11 +588,12 @@ sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
 ```
 
 ```Bash
-sudo pip install pandas==1.1.4 seaborn==0.11.0 PyYAML==5.3.1 --ignore-installed
+sudo pip install pandas==1.1.4 PyYAML==5.3.1 --ignore-installed
+sudo pip install seaborn==0.11.0 # 注意, 會自動安裝相關套件!!
 ```
 
 ```Bash
-sudo dpkg-reconfigure dash  # select No
+sudo dpkg-reconfigure dash
 ```
 
 ```Bash
@@ -629,14 +640,14 @@ sudo apt install kolourpaint4
 ### exFAT driver <a name="exFATdriver"></a>
 
 ```Bash
-sudo add-apt-repository universe
-sudo apt install exfat-fuse exfat-utils
+sudo add-apt-repository universe && sudo apt install exfat-fuse exfat-utils
 ```
 
 ### Java <a name="Java"></a>
 
 ```Bash
-sudo apt install default-jre  # default-jdk
+sudo apt install default-jre  
+#sudo apt install default-jdk
 ```
 
 # Clone SD card <a name="CloneSDcard"></a>
