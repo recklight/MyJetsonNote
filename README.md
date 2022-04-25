@@ -181,33 +181,24 @@ sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 
 5. Install TensorFlow using the pip3 command.
 
-- 注意安裝的 Jetpack 版本
+- 對應 Jetpack 版本 - [TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/)
 
-> [v44 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v44/tensorflow/)
-
-> [v45 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v45/tensorflow/)
-
-> [v46 TENSORFLOW VERSION](https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/)
-
-- This command will install the latest version of TensorFlow compatible with JetPack 4.6.
+- [安裝範例1] 在 Jetpack 4.6 安裝最新版 TensorFlow
 
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 ```
 
-- Note: TensorFlow version 2 was recently released and is not fully backward compatible with TensorFlow 1.x. If you
-  would prefer to use a TensorFlow 1.x package, it can be installed by specifying the TensorFlow version to be less than
-  2, as in the following command
+- [安裝範例2] 在 Jetpack 4.6 安裝 TensorFlow 版本小於2
 
 ```Bash
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 'tensorflow<2'
 ```
 
-- If you want to install the latest version of TensorFlow supported by a particular version of JetPack, issue the
-  following command:
+- [安裝範例3] 安裝指定版本的 TensorFlow
 
 ```Bash
-sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$JP_VERSION tensorflow
+sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$JP_VERSION tensorflow==$TF_VERSION+nv$NV_VERSION```
 ```
 
 # Opencv 4.5 <a name="opencv4.5"></a>
@@ -295,7 +286,7 @@ libatlas-base-dev gfortran libopenblas-dev liblapack-dev liblapacke-dev qt5-defa
 ```
 
 ```Bash
-sudo pip3 install matplotlib  # 注意： 會自動安裝其他matplotlib所需套件, 如果要指定套件版本請自行個別安裝
+sudo pip3 install matplotlib==3.3.4  # 注意： 會自動安裝其他matplotlib所需套件, 如果要指定套件版本請自行個別安裝
 ```
 
 #### Modify matplotlibrc (line #41) as 'backend: TkAgg'
@@ -413,17 +404,17 @@ sudo pip3 install cython
 #### Install LLVM & LLVMLITE:
 
 ```Bash
-wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz
-tar -xvf llvm-7.0.1.src.tar.xz
-cd llvm-7.0.1.src && mkdir llvm_build_dir && cd llvm_build_dir/
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64"
+wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz \
+tar -xvf llvm-7.0.1.src.tar.xz \
+cd llvm-7.0.1.src && mkdir llvm_build_dir && cd llvm_build_dir/ \
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="ARM;X86;AArch64" \
 sudo make -j$(nproc) && sudo make install
 ```
 
-```
-cd bin/
-echo "export LLVM_CONFIG=\""`pwd`"/llvm-config\"" >> ~/.bashrc
-echo "alias llvm='"`pwd`"/llvm-lit'" >> ~/.bashrc
+```Bash
+cd bin/ \
+echo "export LLVM_CONFIG=\""`pwd`"/llvm-config\"" >> ~/.bashrc \
+echo "alias llvm='"`pwd`"/llvm-lit'" >> ~/.bashrc \
 source ~/.bashrc
 ```
 
@@ -437,14 +428,31 @@ sudo pip3 install llvmlite==0.32.1
 
 ```Bash
 sudo apt install libblas-dev liblapack-dev libatlas-base-dev gfortran
-sudo pip3 install numba==0.38.0 scipy==1.1.0 joblib==0.12 scikit-learn==0.21.1
+```
+
+```Bash
+sudo pip3 install numba==0.38.0  # numba==0.48.0
+```
+
+```Bash
+sudo pip3 install scipy==1.1.0  # scipy==1.4.1
+```
+
+```Bash
+sudo pip3 install joblib==0.12  # joblib==0.14
+```
+
+```Bash
+sudo pip3 install scikit-learn==0.21.1
 ```
 
 #### Install Librosa
 
 ```Bash
-sudo pip3 install librosa==0.6.3
+sudo pip3 install librosa==0.6.3  # librosa==0.7.2
 ```
+
+* 如果 joblib 有問題 可以嘗試更新 joblib
 
 # PyTorch <a name="PyTorch"></a>
 
@@ -457,15 +465,6 @@ sudo apt install python3-pip libopenblas-base libopenmpi-dev
 sudo apt install libjpeg-dev zlib1g-dev
 sudo pip3 install Cython
 
-```
-
-### PyTorch 1.6.0 + Torchvision 0.7.0
-
-```Bash
-wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-sudo pip3 install torch-1.6.0rc2-cp36-cp36m-linux_aarch64.whl
-git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
-cd torchvision && sudo python setup.py install
 ```
 
 ### PyTorch 1.7.0 + Torchvision 0.8.1
@@ -520,14 +519,19 @@ _If build wheel error, try_ `Method 2`
 
 ```Bash
 sudo apt install qt5-default python3-pyqt5 pyqt5-dev-tools qttools5-dev-tools
-sudo pip3 install pyqt5==5.15.6 pyqt5-sip==12.9.1
 ```
 
 ```Bash
+sudo pip3 install pyqt5==5.15.6 
+```
+
+```Bash
+# 測試中
+# pyqt5-sip==12.9.1
 # sudo pip3 install sip==5.0.1
 ```
 
-#### Method 2 (JetPack 版本大於4.4 建議使用此種方式)
+#### Method 2
 
 ###### _Install SIP_
 
@@ -563,7 +567,7 @@ python3 configure.py
 make -j$(nproc) && sudo make install
 ```
 
-###### _Install ie multimedia_
+#### Install ie multimedia
 
 ```Bash
 sudo apt install python3-pyqt5.qtmultimedia
@@ -589,6 +593,9 @@ sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
 
 ```Bash
 sudo pip install pandas==1.1.4 PyYAML==5.3.1 --ignore-installed
+```
+
+```Bash
 sudo pip install seaborn==0.11.0 # 注意, 會自動安裝相關套件!!
 ```
 
@@ -597,7 +604,7 @@ sudo dpkg-reconfigure dash
 ```
 
 ```Bash
-sudo apt install filezilla
+sudo apt install filezilla curl
 ```
 
 ### Anonymous FTP server <a name="FTPserver"></a>
@@ -646,8 +653,7 @@ sudo add-apt-repository universe && sudo apt install exfat-fuse exfat-utils
 ### Java <a name="Java"></a>
 
 ```Bash
-sudo apt install default-jre  
-#sudo apt install default-jdk
+sudo apt install default-jre # sudo apt install default-jdk
 ```
 
 # Clone SD card <a name="CloneSDcard"></a>
@@ -674,7 +680,7 @@ sudo gunzip -c ./backup.img.gz | sudo dd of=/dev/sda bs=1M status=progress
 
 # AGX Fast Backup <a name="AGXBackup"></a>
 
-### AGX環境-快速備份與平展, 不須透過 NVIDIA SDK Manager, 平均20分鐘內可安裝完成一台
+- AGX快速備份與平展, 不須透過 NVIDIA SDK Manager, 平均20分鐘內可安裝完成一台
 
 ```Bash
 Coming soon
