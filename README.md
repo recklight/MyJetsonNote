@@ -369,6 +369,9 @@ sudo apt install python-all-dev portaudio19-dev libffi-dev
 
 ```Bash
 sudo pip3 install pyaudio sounddevice
+
+# pip install pipwin
+# pipwin install pyaudio
 ```
 
 # Librosa 0.6.3 <a name="Librosa0.6.3"></a>
