@@ -5,7 +5,7 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 # 目錄
 
 * [Install JetPack on Jetson Xavier](#JetPackOnXavierX)
-* [Check installed](#check installed)
+* [Check installed](#checkinstalled)
 * [Change the Python3 default version](#Python3version)
 * [Install python3-pip](#installpip)
 * [Jetson stats](#Jetson-stats)
@@ -71,7 +71,7 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 10. 安裝結束, 點擊**Finish and exit**, 安裝完成
     ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
-# Check Installed
+# Check Installed <a name="checkinstalled"></a>
 
 1. CUDA
 
