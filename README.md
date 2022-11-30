@@ -4,9 +4,10 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 
 # 目錄
 
-* [安装系統](#安装系統)
-* [檢查安裝](#檢查安裝)
-* [修改默認python版本](#修改默認python版本)
+* [Install JetPack on Jetson Xavier](#JetPackOnXavierX)
+* [Check installed](#check installed)
+* [Change the Python3 default version](#Python3version)
+* [Install python3-pip](#installpip)
 * [Jetson stats](#Jetson-stats)
 * [Tensorflow](#Tensorflow)
 * [Opencv 4.5](#opencv4.5)
@@ -25,43 +26,44 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 * [Clone SD card](#CloneSDcard)
 * [AGX Fast Backup](#AGXBackup)
 
-# 安装系統 <a name="安装系統"></a>
+# Install JetPack on Jetson Xavier<a name="JetPackOnXavierX"></a>
 
 ### NX
 
 * [NVIDIA官網](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit)
 * [JETPACK SDK](https://developer.nvidia.com/embedded/jetpack)
 
-### TX2, AGX
+### AGX - JetPack 4.6.1
 
-**Host電腦端 (電腦端):** 準備一台系統為linux的電腦
+**Host電腦端:** 準備一台系統為linux的電腦
 
-1. 在電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
+1. 在Host電腦端下載並安裝[SDK Manager](https://developer.nvidia.com/embedded/jetpack-archive)
 
 2. 硬體連接
 
-- 使用盒內usb線連接電腦端與AGX（連接AGX電源燈對面的Type-c）, 將AGX連接上電腦螢幕.
-- 進入工程模式, AGX接上電源並保持關機狀態下, 按住中間的按鍵（Force Recovery）不放開, 再按下左邊的電源（Power）不放開, 等待約兩秒後同時放開.
-- 在電腦端上輸入lsusb查看是否連線上AGX（出現Nvidia corp.）
+- 使用盒內Type-c線連接Host電腦端與AGX, 將AGX連接上電腦螢幕.
+- 進入Recovery Mode: AGX接上電源並保持關機狀態下, 按住中間的按鍵（Force Recovery）不放開, 再按下左邊的電源（Power）不放開,
+  等待約兩秒後同時放開.
+- 在Host電腦端上輸入lsusb查看是否連線上AGX（NVIDIA Corp.）
 
 3. 開啟SDK Manager, 登入NVIDIA 帳戶
-   ![1](https://user-images.githubusercontent.com/53622566/82420244-0d868f80-9ab2-11ea-9524-b45e54fe9656.png)
+   ![login](https://user-images.githubusercontent.com/53622566/204737569-ad8bbb2a-c0f2-44c1-894a-eab208297983.png)
 
 4. 如下圖設定 **Jetson TX2** ,  **JetPack 4.3** , **DeepStream**, 點擊**CONTINUE**
 
-- AGX 建議安裝 Jetpack 4.4, 可不勾選DeepStream
-  ![2](https://user-images.githubusercontent.com/53622566/82420328-2abb5e00-9ab2-11ea-8238-c298972a7197.png)
+- Jetpack 4.6.1, 可勾可不勾DeepStream, 點擊 **CONTINE**
+  ![step1](https://user-images.githubusercontent.com/53622566/204737586-480998ec-b175-47c1-9fd7-7d2cf953a533.png)
 
-5. 勾選左下**I accept ...**後點擊 **CONTINE**
-   ![3](https://user-images.githubusercontent.com/53622566/82420414-46266900-9ab2-11ea-9ba9-ded4b2738953.png)
+5. 點擊左下 **I accept...** 後點擊 **CONTINE**
+   ![step2](https://user-images.githubusercontent.com/53622566/204737597-cbb84161-d6f3-4920-bc49-77c5289a4ec9.png)
 
-6. 跳出一個視窗要求輸入系統密碼, 輸入後以繼續安裝
+6. 可能會跳出一個視窗要求輸入系統密碼, 輸入系統密碼後以繼續安裝
    ![4](https://user-images.githubusercontent.com/53622566/82420458-52122b00-9ab2-11ea-9a25-64874768a69f.png)
 
-7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作TX2進入Recovery(工程模式)後, 點擊**Flash**(將TX2連接上螢幕)
+7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作後, 點擊**Flash**
    ![6](https://user-images.githubusercontent.com/53622566/82420572-7a018e80-9ab2-11ea-9a16-fafd75bd70cd.png)
 
-8. 等待出現視窗如下後, 移至**TX2端 (AGX)**, 可以看到系統登入畫面, 請設定系統名稱、密碼等, 最後畫面停留至桌面
+8. 等待出現視窗如下後, 移至**AGX**, 可以看到系統登入畫面, 請設定系統名稱、密碼等, 自動重開機後, 畫面停留至桌面
    ![7](https://user-images.githubusercontent.com/53622566/82420653-9b627a80-9ab2-11ea-819e-2e414d6ff317.png)
 
 9. 回到**Host電腦端**輸入剛才在TX2的設定的使用者名稱與密碼, 點擊**Install**
@@ -69,7 +71,7 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 10. 安裝結束, 點擊**Finish and exit**, 安裝完成
     ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
 
-# 檢查安裝
+# Check Installed
 
 1. CUDA
 
@@ -97,13 +99,7 @@ sudo find / -name libcudnn*
 sudo find / -name tensorrt
 ```
 
-4. TX2 開啟攝影機鏡頭
-
-```Bash
-nvgstcapture --prev-res=2
-```
-
-# 修改默認python版本 <a name="修改默認python版本"></a>
+# Change the Python3 default version <a name="Python3version"></a>
 
 使用alternatives管理多版本軟體 將python版本指定為python2.7
 
@@ -117,7 +113,7 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 150
 ```
 
-選用python版本
+如需切換python版本
 
 ```Bash
 sudo update-alternatives --config python
@@ -129,17 +125,17 @@ sudo update-alternatives --config python
 sudo apt update && sudo apt upgrade
 ```
 
-# Jetson stats <a name="Jetson-stats"></a>
-
-[jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control
-your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2]
-Works with all NVIDIA Jetson ecosystem. Install pip
+# Install python3-pip <a name="installpip"></a>
 
 ```Bash
 sudo apt install python3-pip
 ```
 
-Install
+# Jetson stats <a name="Jetson-stats"></a>
+
+[jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control
+your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2]
+Works with all NVIDIA Jetson ecosystem
 
 ```Bash
 sudo pip3 install jetson-stats
@@ -152,32 +148,31 @@ sudo pip3 install jetson-stats
 1. Install [JetPack](https://developer.nvidia.com/embedded/jetpack) on your Jetson device.
 2. Install system packages required by TensorFlow:
 
-```Bash
-sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev \
-zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
-```
+    ```Bash
+    sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+    ```
 
 3. Install and upgrade pip3
 
-```Bash
-sudo apt-get install python3-pip
-```
+    ```Bash
+    sudo apt-get install python3-pip
+    ```
 
-```Bash
-sudo pip3 install -U pip testresources setuptools==49.6.0 
-```
+    ```Bash
+    sudo pip3 install -U pip testresources setuptools==49.6.0 
+    ```
 
 4. Install the Python package dependencies
 
-```Bash
-sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 \
-keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 \
-protobuf pybind11 cython pkgconfig
-```
+    ```Bash
+    sudo pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 \
+    keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 \
+    protobuf pybind11 cython pkgconfig
+    ```
 
-```Bash
-sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
-```
+    ```Bash
+    sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
+    ```
 
 5. Install TensorFlow using the pip3 command.
 
@@ -185,21 +180,21 @@ sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 
 - [安裝範例1] 在 Jetpack 4.6 安裝最新版 TensorFlow
 
-```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
-```
+    ```Bash
+    sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
+    ```
 
 - [安裝範例2] 在 Jetpack 4.6 安裝 TensorFlow 版本小於2
 
-```Bash
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 'tensorflow<2'
-```
+    ```Bash
+    sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 'tensorflow<2'
+    ```
 
 - [安裝範例3] 安裝指定版本的 TensorFlow
 
-```Bash
-sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$JP_VERSION tensorflow==$TF_VERSION+nv$NV_VERSION```
-```
+    ```Bash
+    sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v$JP_VERSION tensorflow==$TF_VERSION+nv$NV_VERSION```
+    ```
 
 # Opencv 4.5 <a name="opencv4.5"></a>
 
@@ -576,19 +571,19 @@ make -j$(nproc) && sudo make install
 sudo apt install python3-pyqt5.qtmultimedia
 ```
 
-# Others
-
-### Matplotlib
-
-```
-sudo apt install python3-matplotlib  # 不推薦, 但是如果你真的裝不起來再試試這個
-```
-
-### others
+# Install kudio <a name="kduio"></a>
 
 ```Bash
-sudo pip install pyqtgraph==0.11.1
+pip install kudio
 ```
+
+- 如果遇到ubuntu20.04系統無法安裝PyAudio
+
+```Bash
+pip install PyAudio-0.2.11-cp38-cp38-linux_x86_64.whl
+```
+
+# Others
 
 ```Bash
 sudo pip install pyusb click xlsxwriter tqdm imutils qdarkstyle
@@ -610,7 +605,20 @@ sudo dpkg-reconfigure dash
 sudo apt install filezilla curl
 ```
 
-### Anonymous FTP server <a name="FTPserver"></a>
+### Matplotlib
+
+- 不推薦, 但是如果你真的裝不起來再試試這個
+    ```Bash
+    sudo apt install python3-matplotlib
+    ```
+
+### pyqtgraph
+
+```Bash
+sudo pip install pyqtgraph==0.11.1
+```
+
+### FTP server <a name="FTPserver"></a>
 
 ```Bash
 sudo apt install vsftpd
