@@ -4,29 +4,29 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 
 # 目錄
 
-* [Install JetPack on Jetson Xavier](#JetPackOnXavierX)
+* [Flash JetPack on Jetson Xavier](#sdkflash)
 * [Check installed](#checkinstalled)
-* [Change the Python3 default version](#Python3version)
+* [Change the Python3 default version](#python3version)
 * [Install python3-pip](#installpip)
-* [Jetson stats](#Jetson-stats)
-* [Tensorflow](#Tensorflow)
+* [Jetson stats](#jetsonstats)
+* [Tensorflow](#tensorflow)
 * [Opencv 4.5](#opencv4.5)
 * [Opencv 3.4 (No opencv_contrib)](#opencv3.4)
-* [PyAudio & Sounddevice](#PyAudio&Sounddevice)
-* [Librosa 0.6.3](#Librosa0.6.3)
-* [PyTorch](#PyTorch)
-* [Torchaudio](#Torchaudio)
-* [PyQt5](#PyQt5)
+* [PyAudio & Sounddevice](#pyaudiosounddevice)
+* [Librosa 0.6.3](#librosa063)
+* [PyTorch](#pytorch)
+* [Torchaudio](#torchaudio)
+* [PyQt5](#pyqt5)
 * [Others](#Others)
-    * [FTP server](#FTPserver)
+    * [FTP server](#ftpserver)
     * [kolourpaint4](#kolourpaint4)
-    * [Firefox](#Firefox)
-    * [exFAT driver](#exFATdriver)
+    * [Firefox](#firefox)
+    * [exFAT driver](#exfatdriver)
     * [Java](#Java)
-* [Clone SD card](#CloneSDcard)
-* [AGX Fast Backup](#AGXBackup)
+* [Clone SD card](#clonesdcard)
+* [AGX Fast Backup](#agxbackup)
 
-# Install JetPack on Jetson Xavier<a name="JetPackOnXavierX"></a>
+# Flash JetPack on Jetson Xavier<a name="sdkflash"></a>
 
 ### NX
 
@@ -57,16 +57,18 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 5. 點擊左下 **I accept...** 後點擊 **CONTINE**
    ![step2](https://user-images.githubusercontent.com/53622566/204737597-cbb84161-d6f3-4920-bc49-77c5289a4ec9.png)
 
+
 6. 可能會跳出一個視窗要求輸入系統密碼, 輸入系統密碼後以繼續安裝
    ![4](https://user-images.githubusercontent.com/53622566/82420458-52122b00-9ab2-11ea-9a25-64874768a69f.png)
 
 7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作後, 點擊**Flash**
-   ![6](https://user-images.githubusercontent.com/53622566/82420572-7a018e80-9ab2-11ea-9a16-fafd75bd70cd.png)
+   ![ss](https://user-images.githubusercontent.com/53622566/208035781-2c154618-765d-46d6-9862-6d8db2c0740e.png)
 
 8. 等待出現視窗如下後, 移至**AGX**, 可以看到系統登入畫面, 請設定系統名稱、密碼等, 自動重開機後, 畫面停留至桌面
-   ![7](https://user-images.githubusercontent.com/53622566/82420653-9b627a80-9ab2-11ea-819e-2e414d6ff317.png)
+   ![bfl](https://user-images.githubusercontent.com/53622566/208031810-60d47e61-f3f0-4c6d-8359-5869603baf01.png)
 
 9. 回到**Host電腦端**輸入剛才在TX2的設定的使用者名稱與密碼, 點擊**Install**
+   ![bfl2](https://user-images.githubusercontent.com/53622566/208032564-02c5c4c0-b193-4c79-bf9d-2c4c672083aa.png)
 
 10. 安裝結束, 點擊**Finish and exit**, 安裝完成
     ![8](https://user-images.githubusercontent.com/53622566/82421655-e204a480-9ab3-11ea-9e90-7b8e7b0c4e99.png)
@@ -99,7 +101,7 @@ sudo find / -name libcudnn*
 sudo find / -name tensorrt
 ```
 
-# Change the Python3 default version <a name="Python3version"></a>
+# Change the Python3 default version <a name="python3version"></a>
 
 使用alternatives管理多版本軟體 將python版本指定為python2.7
 
@@ -131,7 +133,7 @@ sudo apt update && sudo apt upgrade
 sudo apt install python3-pip
 ```
 
-# Jetson stats <a name="Jetson-stats"></a>
+# Jetson stats <a name="jetsonstats"></a>
 
 [jetson-stats](https://github.com/rbonghi/jetson_stats) is a package for monitoring and control
 your [NVIDIA Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/) [Xavier NX, Nano, AGX Xavier, TX1, TX2]
@@ -141,7 +143,7 @@ Works with all NVIDIA Jetson ecosystem
 sudo pip3 install jetson-stats
 ```
 
-# Tensorflow
+# Tensorflow <a name="tensorflow"></a>
 
 * [NVIDIA DOC.](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html)
 
@@ -356,7 +358,7 @@ python3 -c 'import cv2; print(cv2.__version__)'
 python2 -c 'import cv2; print(cv2.__version__)'
 ```
 
-# PyAudio & Sounddevice <a name="PyAudio&Sounddevice"></a>
+# PyAudio & Sounddevice <a name="pyaudiosounddevice"></a>
 
 ```Bash
 sudo apt install python-all-dev portaudio19-dev libffi-dev
@@ -369,7 +371,7 @@ sudo pip3 install pyaudio sounddevice
 # pipwin install pyaudio
 ```
 
-# Librosa 0.6.3 <a name="Librosa0.6.3"></a>
+# Librosa 0.6.3 <a name="librosa063"></a>
 
 - [How to install the Librosa library in Jetson Nano or aarch64 module](https://learninone209186366.wordpress.com/2019/07/24/how-to-install-the-librosa-library-in-jetson-nano-or-aarch64-module/)
 - [numba/llvmlite](https://github.com/numba/llvmlite)
@@ -452,7 +454,7 @@ sudo pip3 install librosa==0.6.3  # librosa==0.7.2
 
 * 如果 joblib 有問題 可以嘗試更新 joblib
 
-# PyTorch <a name="PyTorch"></a>
+# PyTorch <a name="pytorch"></a>
 
 - [pytorch for jetson](https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048)
 
@@ -493,7 +495,7 @@ cd torchvision && sudo python setup.py install
 
 ```
 
-# Torchaudio <a name="Torchaudio"></a>
+# Torchaudio <a name="torchaudio"></a>
 
 - [torchaudio](https://github.com/pytorch/audio)
 
@@ -509,7 +511,7 @@ sudo apt install sox libsox-dev libsox-fmt-all
 cd torchaudio && sudo python setup.py install
 ```
 
-# PyQt5 <a name="PyQt5"></a>
+# PyQt5 <a name="pyqt5"></a>
 
 #### Method 1
 
@@ -618,7 +620,7 @@ sudo apt install filezilla curl
 sudo pip install pyqtgraph==0.11.1
 ```
 
-### FTP server <a name="FTPserver"></a>
+### FTP server <a name="ftpserver"></a>
 
 ```Bash
 sudo apt install vsftpd
@@ -643,31 +645,31 @@ anon_upload_enable=YES
 sudo systemctl restart vsftpd
 ```
 
-### Firefox <a name="Firefox"></a>
+### Firefox <a name="firefox"></a>
 
 ```Bash
 sudo apt install firefox
 ```
 
-### Kolourpaint4 <a name="Kolourpaint4"></a>
+### Kolourpaint4 <a name="kolourpaint4"></a>
 
 ```Bash
 sudo apt install kolourpaint4
 ```
 
-### exFAT driver <a name="exFATdriver"></a>
+### exFAT driver <a name="exfatdriver"></a>
 
 ```Bash
 sudo add-apt-repository universe && sudo apt install exfat-fuse exfat-utils
 ```
 
-### Java <a name="Java"></a>
+### Java <a name="java"></a>
 
 ```Bash
 sudo apt install default-jre # sudo apt install default-jdk
 ```
 
-# Clone SD card <a name="CloneSDcard"></a>
+# Clone SD card <a name="clonesdcard"></a>
 
 - [dd command](https://blog.gtwang.org/linux/dd-command-examples/)
 
@@ -689,7 +691,7 @@ sudo dd if=/dev/sda conv=sync,noerror bs=1M status=progress | gzip -c > ./backup
 sudo gunzip -c ./backup.img.gz | sudo dd of=/dev/sda bs=1M status=progress
 ```
 
-# AGX Fast Backup <a name="AGXBackup"></a>
+# AGX Fast Backup <a name="agxbackup"></a>
 
 - AGX快速備份與平展, 不須透過 NVIDIA SDK Manager, 平均20分鐘內可安裝完成一台
 
