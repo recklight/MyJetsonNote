@@ -1,6 +1,6 @@
 # MyJetsonNote
 
-For Jetson Series - TX2, Xavier AGX, Xavier NX
+NVIDIA® Jetson AGX Xavier™ | NVIDIA® Jetson Xavier™ NX
 
 # 目錄
 
@@ -49,16 +49,14 @@ For Jetson Series - TX2, Xavier AGX, Xavier NX
 3. 開啟SDK Manager, 登入NVIDIA 帳戶
    ![login](https://user-images.githubusercontent.com/53622566/204737569-ad8bbb2a-c0f2-44c1-894a-eab208297983.png)
 
-4. 如下圖設定 **Jetson TX2** ,  **JetPack 4.3** , **DeepStream**, 點擊**CONTINUE**
-
-- Jetpack 4.6.1, 可勾可不勾DeepStream, 點擊 **CONTINE**
+4. 如下圖設定 **Jetson AGX** ,  **JetPack 4.6.1** , 可勾可不勾**DeepStream**, 點擊**CONTINUE**
   ![step1](https://user-images.githubusercontent.com/53622566/204737586-480998ec-b175-47c1-9fd7-7d2cf953a533.png)
 
-5. 點擊左下 **I accept...** 後點擊 **CONTINE**
+5. 點擊左下 **I accept t...**, 點擊 **CONTINE**
    ![step2](https://user-images.githubusercontent.com/53622566/204737597-cbb84161-d6f3-4920-bc49-77c5289a4ec9.png)
 
 
-6. 可能會跳出一個視窗要求輸入系統密碼, 輸入系統密碼後以繼續安裝
+6. 跳出一個視窗要求輸入系統密碼, 輸入系統密碼後以繼續安裝
    ![4](https://user-images.githubusercontent.com/53622566/82420458-52122b00-9ab2-11ea-9a25-64874768a69f.png)
 
 7. 進入 **STEP 03**, 等待下載及安裝至出現出視窗如下, 點選**Manual Setup**並按照提示操作後, 點擊**Flash**
