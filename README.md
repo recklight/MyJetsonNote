@@ -580,7 +580,8 @@ pip install kudio
 - 如果遇到ubuntu20.04系統無法安裝PyAudio
 
 ```Bash
-pip install PyAudio-0.2.11-cp38-cp38-linux_x86_64.whl
+sudo apt -y install portaudio19-dev
+# pip install PyAudio-0.2.11-cp38-cp38-linux_x86_64.whl
 ```
 
 # Others
